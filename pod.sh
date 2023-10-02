@@ -1,33 +1,5 @@
 #!/bin/bash
-
-
-function print_and_wait() {
-  # clearing the console
-  if [[ $1 == "--clean" || $1 == "-c" ]]; then
-    clear;
-    shift 1
-  fi
-
-  # colored output
-  if [[ $1 == "--colored" || $1 == "-co" ]]; then
-    ACCENT_COLOR="\e[1;34m"
-    NORMAL_COLOR="\e[0m"
-    shift 1
-  else
-    ACCENT_COLOR="\e[0m"
-  fi
-
-  MESSAGE="$@"
-  echo -e "${ACCENT_COLOR}${MESSAGE}${NORMAL_COLOR}";
-  read -n 1 -r -s
-}
-
-function execute_command() {
-  args=$@
-  print_and_wait -co "$ $args"
-  $@
-  echo
-}
+source cli_utils.sh
 
 print_and_wait -c "Pod sample where we create and delete a pod. Press any key to start"
 
@@ -39,6 +11,9 @@ execute_command kubectl run my-nginx --image=nginx:alpine
 
 print_and_wait "Let's now see the details of the newly created pod"
 execute_command kubectl describe pod my-nginx
+
+print_and_wait "Now we forward a port to be able to access the pod from outside. You can check it by accessing localhost:8080 or continue by pressing CTRL+C to kill the port-forwarding process.."
+execute_command kubectl port-forward my-nginx 8080:80
 
 print_and_wait "Finally, let's delete the pod"
 execute_command kubectl delete pod my-nginx
