@@ -1,5 +1,8 @@
 #!/bin/bash
-source cli_utils.sh
+
+# get parent directory
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+source "$DIR/../cli_utils.sh"
 
 print_and_wait -c "Pod sample where we create and delete a pod. Press any key to start"
 

@@ -10,7 +10,7 @@ function print_and_wait() {
 
   # colored output
   if [[ $1 == "--colored" || $1 == "-co" ]]; then
-    ACCENT_COLOR="\e[1;34m"
+    ACCENT_COLOR="\e[1;36m"
     NORMAL_COLOR="\e[0m"
     shift 1
   else

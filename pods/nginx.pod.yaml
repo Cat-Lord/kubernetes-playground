@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: yaml-nginx
+spec:
+  containers:
+    - name: yaml-nginx
+      image: nginx:alpine
