@@ -6,7 +6,6 @@ metadata:
     app: my-nginx
     tier: frontend
 spec:                 # top-level specification
-  #replicas: 1        # scaling but it is disblaed for testing, because this will override any manual commands
   selector:           # selector for a template that can be in a separate file, but it's typically not
     matchLabels:
       tier: frontend  # label 'tier' with the value 'frontend'
@@ -20,7 +19,3 @@ spec:                 # top-level specification
         image: nginx:alpine
         ports:
         - containerPort: 80
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "200m"     # 200 millicpu (.2 or 20% of the cpu)

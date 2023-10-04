@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: meowness-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: meowness-app
+  template:
+    metadata:
+      labels:
+        app: meowness-app
+    spec:
+      containers:
+      - image: meowness-app:3.0
+        imagePullPolicy: Never
+        name: meowness-app
+        resources: {}

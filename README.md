@@ -2,6 +2,7 @@
 
 - Kubernetes CLI (kubectl)
 - Minikube
+- Docker (for deployment demo)
 
 # About
 
@@ -16,3 +17,7 @@ To identify waiting state easily, every time user needs to press a key to contin
 List of all pods
 > $ kubectl get pods
 ```
+
+# Credits
+
+Samples for deployment are forked from [Dan Wahlin's repository](https://github.com/DanWahlin/DockerAndKubernetesCourseCode/tree/main/samples/deployments/node-app).
