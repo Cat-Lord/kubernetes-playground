@@ -1,11 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: meowness-app
+  name: meowness-balancer
+  labels:
+    app: cuteness
 spec:
   type: LoadBalancer
   selector:
-    app: meowness-app
+    app: cuteness
   ports:
   - port: 80          # expose port 80
     targetPort: 8080  # redirect calls from port 80 to port 8080
+

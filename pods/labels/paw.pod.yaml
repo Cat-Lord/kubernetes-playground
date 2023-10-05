@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: paw-nginx
+  labels:
+    app: cuteness
+spec:
+  containers:
+    - name: paw-container
+      image: nginx:alpine
