@@ -2,7 +2,7 @@
 
 # get parent directory
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source "$DIR/../cli_utils.sh"
+source "$DIR/../../cli_utils.sh"
 
 print_and_wait -c "Labels and selectors in action"
 execute_command kubectl apply -f labels/paw.pod.yaml
