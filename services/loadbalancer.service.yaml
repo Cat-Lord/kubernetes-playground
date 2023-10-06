@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-balancer
+  labels:
+    app: meowness
+spec:
+  type: LoadBalancer    # type: ClusterIP, LoadBalancer, ...
+  selector:             # template label(s) this service applies to
+    app: meowness
+  ports:
+  - port: 8080
+    targetPort: 80
+

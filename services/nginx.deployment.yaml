@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    app: meowness
+    tier: frontend
+spec:
+  replicas: 2 
+  selector:                       # tie the deployment to these pods below
+    matchLabels:
+      tier: frontend
+  template:                       # mark these pods with relevant labels
+    metadata:
+      labels:
+        app: meowness
+        tier: frontend
+    spec:
+      containers:
+      - name: meowness-container
+        image: nginx:alpine
+        ports:
+        - containerPort: 80

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-nodeport
+  labels:
+    app: meowness
+spec:
+  type: NodePort        # type: ClusterIP, LoadBalancer, ...
+  selector:             # template label(s) this service applies to
+    app: meowness
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30123     # can also be assigned automatically from a range
+
