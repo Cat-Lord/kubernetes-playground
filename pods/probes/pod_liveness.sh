@@ -2,7 +2,7 @@
 
 # get parent directory
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source "$DIR/../cli_utils.sh"
+source "$DIR/../../cli_utils.sh"
 
 print_and_wait -c "Liveness checks with HTTP and exec approach"
 
