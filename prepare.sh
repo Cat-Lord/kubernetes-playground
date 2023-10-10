@@ -33,4 +33,6 @@ echo
 echo 'Please run the following commands in your shell to continue'
 echo 'eval $(minikube -p minikube docker-env)'
 echo 'minikube tunnel'
-
+echo
+echo '(Optionally)'
+echo alias k="kubectl"

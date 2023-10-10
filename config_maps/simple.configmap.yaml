@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user-settings-yaml
+data:
+  editor.width: "14"
+  editor.height: "2"
+  store-name: "rm-sk-sk-01"
+

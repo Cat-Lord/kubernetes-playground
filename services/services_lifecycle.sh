@@ -25,6 +25,7 @@ echo; # spacing
 
 print_and_wait "To access pods we can call an exposed service."
 print_and_wait "First we spin up a load-balancer service"
+execute_command cat loadbalancer.service.yaml
 execute_command kubectl apply -f loadbalancer.service.yaml
 sleep 2;
 execute_command kubectl get services
@@ -36,6 +37,7 @@ SERVICE_DNS_NAME=`kubectl get services --no-headers -o custom-columns=":metadata
 execute_command kubectl exec ${POD_1_NAME} -- curl -s http://${SERVICE_DNS_NAME}:8080
 
 print_and_wait "Let's try a nodePort service"
+execute_command cat nodeport.service.yaml
 execute_command kubectl apply -f nodeport.service.yaml
 sleep 2;
 
