@@ -1,0 +1,6 @@
+apiVersion: v2
+name: guestbook
+appVersion: "1.0"
+description: Helm demo project with a custom Chart.
+version: 0.1.0
+type: application
