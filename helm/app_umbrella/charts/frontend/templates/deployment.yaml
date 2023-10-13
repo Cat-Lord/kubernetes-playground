@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catissimo-fe
+  labels:
+    app: catissimo
+    tier: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: catissimo
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: catissimo
+        tier: frontend 
+    spec:
+      containers:
+        - name: fe-nginx
+          image: nginx:alpine
+          ports:
+          - containerPort: 4200
+

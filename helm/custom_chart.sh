@@ -45,4 +45,3 @@ print_and_wait "The cleanup process is really simple. Let helm delete the resour
 execute_command helm uninstall guestbook-test-1
 echo 'kubectl get pods --watch'
 kubectl get pods --watch
-

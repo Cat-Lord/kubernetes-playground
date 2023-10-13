@@ -1,0 +1,5 @@
+name: catissimo-demo
+apiVersion: 2
+kind: application
+appVersion: "1.0"
+version: 0.1.0
