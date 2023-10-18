@@ -1,0 +1,5 @@
+name: catissimo-backend
+greeting: "Hello everyone from the backend!"
+ports:
+  internal: 80
+  external: 30123

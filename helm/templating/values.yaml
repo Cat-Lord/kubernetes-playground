@@ -1,0 +1,8 @@
+global:
+  owner: catlord
+# to override, names need to match the name of the respective chart
+catissimo-backend:
+  greeting: "Hi everynyan, it's me, the backend!"         # overwrite sub-charts values.yaml definitions
+  name: catissimo-be
+catissimo-frontend:
+  name: catissimo-fe

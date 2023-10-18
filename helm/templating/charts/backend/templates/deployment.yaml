@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Chart.Name}}
+  labels:
+    app: {{.Values.name}}
+    tier: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: {{.Values.name}}
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: {{.Values.name}}
+        tier: backend 
+    spec:
+      containers:
+        - name: be-nginx
+          image: nginx:alpine
+          command:
+          - /bin/sh
+          - -c
+          - >
+            while true; do
+              echo 'Release Name: {{.Release.Name}}' > /usr/share/nginx/html/index.html;
+              echo {{ quote .Values.greeting}} >> /usr/share/nginx/html/index.html;
+              echo '</hr >' >> /usr/share/nginx/html/index.html;
+              echo 'By {{.Values.global.owner}}' >> /usr/share/nginx/html/index.html;
+              sleep 300;
+            done
+          ports:
+          - containerPort: {{.Values.ports.internal}}
+

@@ -26,6 +26,10 @@ else
 fi
 
 echo
+minikube addons enable ingress
+echo
+
+echo
 echo '-----------------------------------------------------------'
 echo '| Preparation completed, you may try out the scripts now. |'
 echo '-----------------------------------------------------------'

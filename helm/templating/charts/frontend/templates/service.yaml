@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fe-service
+spec:
+  selector:
+    app: {{.Values.name}}
+    tier: frontend
+  ports:
+    - protocol: TCP
+      {{ with .Values.ports -}}
+      port: {{.external}}
+      targetPort: {{.internal}}
+      {{- end }}

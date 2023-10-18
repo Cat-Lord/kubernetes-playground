@@ -1,0 +1,7 @@
+name: catissmo-fe
+greeting: "Hello everyone, frontend here!"
+password: password123
+ports:
+  internal: 4200
+  external: 30123
+
