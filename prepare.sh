@@ -29,9 +29,16 @@ echo
 minikube addons enable ingress
 echo
 
+which helm 2>&1 1>/dev/null
+
+if [[ ! "$?" -eq 0 ]]; then
+  echo '[Warning] Helm installation not found. You may continue, but some examples might not work as expected'
+  echo
+fi
+
 echo
 echo '-----------------------------------------------------------'
-echo '| Preparation completed, you may try out the scripts now. |'
+echo '| Preparation complete, you may try out the scripts now. |'
 echo '-----------------------------------------------------------'
 echo
 echo 'Please run the following commands in your shell to continue'

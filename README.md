@@ -3,6 +3,7 @@
 - Kubernetes CLI (kubectl)
 - Minikube
 - Docker (for deployment demo)
+- Helm
 
 # About
 
