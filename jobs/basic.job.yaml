@@ -1,0 +1,19 @@
+apiVersion: batch/v1      # notice the uncommon version type
+kind: Job
+metadata:
+  name: basic-job
+spec:
+  parallelism: 2          # ran 2 pods at once
+  completions: 3          # if we run multiple pods, how many successes count as job complete?
+  template:
+    metadata:
+      name: basic-job-pod
+    spec:
+      restartPolicy: Never    # or OnFailure
+      containers:
+      - name: bjp-c
+        image: alpine
+        command:
+        - /bin/sh
+        - -c
+        - "echo `hostname`: `date` && sleep 30"

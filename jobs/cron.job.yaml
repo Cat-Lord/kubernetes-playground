@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: basic-cronjob
+spec:
+  concurrencyPolicy: Allow        # if another cron job is scheduled but one is running, should it be allowed to start? 
+  schedule: "*/1 * * * *"         # run every minute
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: cron-cont
+            image: alpine
+            command:
+            - /bin/sh
+            - -c
+            - "echo `hostname`: `date`"

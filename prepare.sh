@@ -22,6 +22,9 @@ else
   if [[ "$?" -ne 0 ]]; then
     docker context create minikube
   fi
+
+  # DOCKER_HOST would override the context
+  unset DOCKER_HOST
   docker context use minikube
 fi
 
