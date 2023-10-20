@@ -5,7 +5,7 @@ metadata:
 spec:
   concurrencyPolicy: Allow        # if another cron job is scheduled but one is running, should it be allowed to start? 
   schedule: "*/1 * * * *"         # run every minute
-  jobTemplate:
+  jobTemplate:              # notice that this attribute is named differently compared to normal job
     spec:
       template:
         spec:

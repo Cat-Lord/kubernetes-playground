@@ -19,6 +19,10 @@ List of all pods
 > $ kubectl get pods
 ```
 
+# Important note
+
+Make sure you always navigate to the directory of a script you would like to run. So when you want to run `jobs/jobs.sh`, make sure to `cd` into `./jobs` first. This applies to any script (yes, even in sub-directories).
+
 # Credits
 
 Samples for deployment are forked from [Dan Wahlin's repository](https://github.com/DanWahlin/DockerAndKubernetesCourseCode/tree/main/samples/deployments/node-app).

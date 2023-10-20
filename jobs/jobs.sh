@@ -41,5 +41,8 @@ print_and_wait "Since the job runs every minute, we might need to wait a little 
 execute_command kubectl get cronjobs --watch
 print_job_logs
 
+print_and_wait "We can inspect useful details about a cronjob (or plain job for that matter) with describe. The info in the describe depends on if the job already ran or not (we might see many <unset> values in that case)."
+execute_command kubectl describe cronjob basic-cronjob
+
 print_and_wait "Cleanup"
 execute_command kubectl delete -f cron.job.yaml

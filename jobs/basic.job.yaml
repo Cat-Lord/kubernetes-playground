@@ -16,4 +16,4 @@ spec:
         command:
         - /bin/sh
         - -c
-        - "echo `hostname`: `date` && sleep 30"
+        - "echo `hostname`: `date` && sleep 5"
