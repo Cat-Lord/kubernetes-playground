@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catissimo
+  labels:
+    app: catissimo
+spec:
+  replicas: 3
+  minReadySeconds: 1              # number of seconds to wait after a Pod was created with containers to declare it ready
+  progressDeadlineSeconds: 60     # default 600, tries to progress through failure until reaching this timeout
+  revisionHistoryLimit: 5         # default 10, number of history versions to keep track of
+  strategy:
+    type: RollingUpdate       # default
+    rollingUpdate:
+      # default for the properties below is 25% which is 
+      # a solid choice (changed for demonstration purposes)
+      maxSurge: 1               # how many pods are allowed to be created on top of existing ones
+      maxUnavailable: 1         # how many pods are allowed to be removed from the amount of expected pods
+  selector:
+      matchLabels:
+        app: catissimo
+  template:
+    metadata:
+      labels:
+        app: catissimo
+    spec:
+      containers:
+      - name: ccont
+        image: catissimo:1.0
+        resources:
+          limits:
+            cpu: "200m"
+            memory: "128Mi"
