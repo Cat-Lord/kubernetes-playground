@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catissimo-canary
+  labels:
+    app: catissimo
+    track: canary
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+        app: catissimo
+        track: canary
+  template:
+    metadata:
+      labels:
+        app: catissimo
+        track: canary
+    spec:
+      containers:
+      - name: canary-cont
+        image: catissimo:2.0
+        resources:
+          limits:
+            cpu: "200m"
+            memory: "128Mi"
