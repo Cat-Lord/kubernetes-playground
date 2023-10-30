@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: local-storage-pvc
+spec:
+  storageClassName: local-storage   # bind to our local-storage PV
+  accessModes:
+  - ReadWriteOnce                   # define access mode for this claim
+  resources:
+    requests:
+      storage: 10Mi                 # and a part of required resources

@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-pv
+spec:
+  capacity:
+    storage: 10Mi
+  volumeMode: Filesystem                  # local storage
+  accessModes:
+  - ReadWriteOnce                         # read-write permissions for one pod
+  persistentVolumeReclaimPolicy: Retain   # keep contents after node is deleted. Other option is "Delete"
+  storageClassName: local-storage         # we're not working with a storageClass in this example
+  local:
+    path: /tmp/persistent-storage
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:                  # select a node that matches with a specific label
+      - matchExpressions:
+        - key: kubernetes.io/hostname     # <-- this has to be label key
+          operator: In
+          values:
+          - minikube                      # <-- and this is the label value. Has to be minikube, since that is the name of our node
