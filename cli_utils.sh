@@ -10,11 +10,13 @@ function print_and_wait() {
 
   # colored output
   if [[ $1 == "--colored" || $1 == "-co" ]]; then
+    # bold text with blue color
     ACCENT_COLOR="\e[1;36m"
     NORMAL_COLOR="\e[0m"
     shift 1
   else
-    ACCENT_COLOR="\e[0m"
+    # normal text with purple color
+    ACCENT_COLOR="\e[0;35m"
   fi
 
   MESSAGE="$@"
