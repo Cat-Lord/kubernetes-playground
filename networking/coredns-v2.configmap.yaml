@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coredns
+  namespace: kube-system
+data:
+  Corefile: |
+    .:53 {
+        log
+        errors
+        health
+        ready
+        kubernetes cluster.local in-addr.arpa ip6.arpa {
+           pods insecure
+           fallthrough in-addr.arpa ip6.arpa
+           ttl 30
+        }
+        prometheus :9153
+        hosts {
+           192.168.49.1 host.minikube.internal
+           fallthrough
+        }
+        forward . 1.1.1.1     # forward everything to 1.1.1.1
+        cache 30
+        loop
+        reload
+        loadbalance
+    }
+    cats.com {
+      forward . 9.9.9.9       # if the target is catheaven, forward everything to 9.9.9.9
+    }
