@@ -1,0 +1,11 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-single
+spec:
+  ingressClassName: nginx         # name of the controller. Can be omitted since minikube uses it as default
+  defaultBackend:                 # what to hit when no rules where matched/defined
+    service:
+      name: ha-single
+      port:
+        number: 80

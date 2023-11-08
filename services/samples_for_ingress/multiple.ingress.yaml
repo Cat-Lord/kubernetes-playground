@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-multiple
+spec:
+  ingressClassName: nginx         # name of the controller
+  rules:
+    - host: path.example.com
+      http:                       # rule type
+        paths:
+          - path: /red            # host path + this defines a new rule
+            pathType: Prefix      # how to match. Possible values: prefix, exact, implementationSpecific
+            backend:
+              service:
+                name: ha-red
+                port:
+                  number: 8080
+          - path: /blue
+            pathType: Exact
+            backend:
+              service:
+                name: ha-blue
+                port:
+                  number: 8080
+  defaultBackend:                 # in case none of the above pages matches, this could be an error page
+    service:
+      name: ha-error
+      port:
+        number: 80

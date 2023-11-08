@@ -25,8 +25,8 @@ function print_and_wait() {
 }
 
 function execute_command() {
-  args=$@
+  args="$@"
   print_and_wait -co "$ $args"
-  $@
+  eval $args			# keeps quotes
   echo
 }

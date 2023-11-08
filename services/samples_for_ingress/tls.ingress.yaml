@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-tls
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - tls.example.com
+    secretName: self-signed-cert-secret     # generated secret (testing only)
+  rules:
+  - host: tls.example.com                   # needs to match the TLS URL above
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: hello-app-tls
+            port:
+              number: 80
