@@ -8,7 +8,7 @@ LOCAL_DIR_PATH=/tmp/persistent-storage
 print_and_wait -c "Persistent volume created manually and claimed by a pod."
 
 print_and_wait "Since we want to use a local directory, we need to make sure it's created."
-execute_command "rm -r ${LOCAL_DIR_PATH} && mkdir ${LOCAL_DIR_PATH} 2>/dev/null"
+execute_command "rm -r ${LOCAL_DIR_PATH} 2>/dev/null; mkdir ${LOCAL_DIR_PATH} 2>/dev/null"
 
 print_and_wait "Before we start, make sure you have minikube mount running in the background. Run this in a separate terminal:"
 print_and_wait "minikube mount ${LOCAL_DIR_PATH}:${LOCAL_DIR_PATH}"
@@ -69,8 +69,17 @@ execute_command kubectl get pv
 print_and_wait "Status Released evokes that the PV is not claimed by any PVC and the storage is stil there."
 execute_command cat ${LOCAL_DIR_PATH}/logs
 
+print_and_wait "If we wanted to reuse that PV, we would need to do it a little differently, because it's not possible the expected way."
+execute_command kubectl create -f local.pvclaim.yaml
+execute_command kubectl create -f single.pod.yaml
+execute_command kubectl get pods
+
+print_and_wait "The pod will stay pending because the storage is not reusable after it has been 'dropped' by the PVC. We'd have to recreate all the resources to reassign it back."
+
 print_and_wait "Finally we delete the PV as well. Be careful, because order matters: Pods first, then PVCs and finally PVs. Otherwise you might get stuck in a waiting state."
 execute_command rm -r ${LOCAL_DIR_PATH}
+execute_command kubectl delete -f single.pod.yaml
+execute_command kubectl delete -f local.pvclaim.yaml
 execute_command kubectl delete pv --all
 
 echo "Don't forget to close the opened minikube mount ;)"
