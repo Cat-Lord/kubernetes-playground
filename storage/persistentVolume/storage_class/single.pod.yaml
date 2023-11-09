@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: singular-pod
+spec:
+  volumes:
+  - name: local-storage
+    persistentVolumeClaim: 
+      claimName: local-storage-pvc
+  containers:
+    - name: thy-server
+      image: nginx:alpine
+      command:
+        - /bin/sh
+        - -c
+        - touch /tmp/data/logs && echo $(date) >> /tmp/data/logs && sleep 1000
+      volumeMounts:
+      - name: local-storage
+        mountPath: /tmp/data
+      resources:
+      
