@@ -7,8 +7,8 @@ LOCAL_DIR_PATH=/tmp/persistent-storage
 
 print_and_wait -c "Persistent volume created manually and claimed by a pod."
 
-print_and_wait "Since we want to use a local directory, we need to make sure it's created"
-execute_command mkdir ${LOCAL_DIR_PATH} 2>/dev/null
+print_and_wait "Since we want to use a local directory, we need to make sure it's created."
+execute_command "rm -r ${LOCAL_DIR_PATH} && mkdir ${LOCAL_DIR_PATH} 2>/dev/null"
 
 print_and_wait "Before we start, make sure you have minikube mount running in the background. Run this in a separate terminal:"
 print_and_wait "minikube mount ${LOCAL_DIR_PATH}:${LOCAL_DIR_PATH}"
@@ -43,9 +43,34 @@ execute_command kubectl exec singular-pod -- cat /tmp/data/logs
 print_and_wait "And if done correctly, this info should be stored in our local directory ${LOCAL_DIR_PATH}"
 execute_command cat ${LOCAL_DIR_PATH}/logs
 
-print_and_wait "We can delete all PVs, PVCs and pods. Be careful, because order matters. Some deletions take substantially more time than others :/"
-print_and_wait "Before we start deleting the resources, make sure you CLOSE THE OPENED MINIKUBE MOUNT. Otherwise it will prevent deletion."
-rm -rf ${LOCAL_DIR_PATH}
+print_and_wait "Bind information is also reflected on the PVC:"
+execute_command 'kubectl describe pvc | grep -i "used by"'
+
+print_and_wait "The PV has read/write once permissions. Let's try creating another pod that uses it to make sure it has access to the PV."
+execute_command kubectl create -f copy.pod.yaml
+
+print_and_wait "Wait until it's created and continue with CTRL+C"
+execute_command kubectl get pods -w
+execute_command kubectl exec singular-pod-copy -- cat /tmp/data/logs
+
+print_and_wait "Since the reclaim policy is set to retain in our PV, we can do this:"
 execute_command kubectl delete -f single.pod.yaml --now
-kubectl delete pvc --all
-kubectl delete pv --all
+execute_command kubectl delete -f copy.pod.yaml --now
+print_and_wait "...the PV and PVC still stay and..."
+execute_command kubectl get pvc
+execute_command 'kubectl describe pvc | grep -i "used by"'
+execute_command kubectl get pv
+print_and_wait "...so does the RETAINed storage, even though there are no pods that are using it."
+execute_command cat ${LOCAL_DIR_PATH}/logs
+
+print_and_wait "Deleting the PVC gets the PV into an interesting situation"
+execute_command kubectl delete pvc --all
+execute_command kubectl get pv
+print_and_wait "Status Released evokes that the PV is not claimed by any PVC and the storage is stil there."
+execute_command cat ${LOCAL_DIR_PATH}/logs
+
+print_and_wait "Finally we delete the PV as well. Be careful, because order matters: Pods first, then PVCs and finally PVs. Otherwise you might get stuck in a waiting state."
+execute_command rm -r ${LOCAL_DIR_PATH}
+execute_command kubectl delete pv --all
+
+echo "Don't forget to close the opened minikube mount ;)"
