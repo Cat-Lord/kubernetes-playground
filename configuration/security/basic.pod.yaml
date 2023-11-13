@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-secret
+spec:
+  volumes:
+  - name: login-secret
+    secret:
+      secretName: login-secret
+  containers:
+    - name: pod-with-secret
+      image: busybox
+      command: ['sleep']
+      args: ['infinity']
+      env:
+      - name: LOGIN_SECRET_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: login-secret
+            key: password
+      volumeMounts:
+        - name: login-secret
+          readOnly: true
+          mountPath: /etc/logins

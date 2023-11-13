@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paw-dp
+  labels:
+    app: paw
+spec:
+  selector:
+    matchLabels:
+      app: paw
+  template:
+    metadata:
+      labels:
+        app: paw
+    spec:
+      volumes:
+        - name: volume-cm
+          configMap:
+            name: file-env          # created using kubectl, see scripts
+      containers:
+      - name: file-env
+        image: busybox
+        imagePullPolicy: IfNotPresent
+        command: ['/bin/sh', '-c', 'sleep infinity']
+        volumeMounts:
+          - name: volume-cm
+            mountPath: "/etc/appconfig"

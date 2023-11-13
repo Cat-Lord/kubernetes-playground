@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whisker
+  labels:
+    app: whisker
+spec:
+  selector:
+    matchLabels:
+      app: whisker
+  template:
+    metadata:
+      labels:
+        app: whisker
+    spec:
+      containers:
+      - name: user-defined-env
+        image: busybox
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: THY_ENV_VAR
+          value: "service.sample.com"
+        - name: THY_BEST_CAT
+          value: Kefir
+        command: ['/bin/sh', '-c', 'sleep infinity']
