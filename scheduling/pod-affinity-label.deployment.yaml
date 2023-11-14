@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: claws
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: claws
+  template:
+    metadata:
+      labels:
+        app: claws
+    spec:
+      containers:
+      - name: ce-cont
+        image: busybox
+        command: ['sleep']
+        args: ['infinity']
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                 matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                    - claws
+              topologyKey: "kubernetes.io/hostname"

@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cat-ears-app
+spec:
+  selector:
+    matchLabels:
+      app: cat-ears-app                                   # this will be the "app" deployment
+  template:
+    metadata:
+      labels:
+        app: cat-ears-app
+    spec:
+      containers:
+      - name: ce-cont
+        image: busybox
+        command: ['sleep']
+        args: ['infinity']
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cat-ears-cache
+spec:
+  selector:
+    matchLabels:
+      app: cat-ears-cache
+  template:
+    metadata:
+      labels:
+        app: cat-ears-cache
+    spec:
+      containers:
+      - name: cec-cont
+        image: busybox
+        command: ['sleep']
+        args: ['infinity']
+      affinity:
+        podAffinity:
+          # this means that there must be already a scheduled pod
+          # to satisfy the selector that is defined below
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              # this will select any node where app=cat-ears-app
+              # so basically deploying this cache wherever the 
+              # app resides so that they are not split between 
+              # different nodes
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - cat-ears-app                            # here we are targeting the app deployment above
+            topologyKey: "kubernetes.io/hostname"

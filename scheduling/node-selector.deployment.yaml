@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: purrs-app
+spec:
+  selector:
+    matchLabels:
+      app: purrs-app
+  template:
+    metadata:
+      labels:
+        app: purrs-app
+    spec:
+      containers:
+      - name: pa-cont
+        image: busybox
+        command: ['sleep']
+        args: ['infinity']
+      nodeSelector:
+        preferredPet: cat

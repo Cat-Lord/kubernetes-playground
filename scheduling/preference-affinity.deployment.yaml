@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kitten
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: kitten
+  template:
+    metadata:
+      labels:
+        app: kitten
+    spec:
+      containers:
+      - name: kitt-cont
+        image: busybox
+        command: ['sleep']
+        args: ['infinity']
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            # placing more importance (weight) on the preferred pet being cat
+            - weight: 10
+              preference:
+                matchExpressions:
+                  - key: preferredPet
+                    operator: In
+                    values:
+                      - dog
+            - weight: 50
+              preference:
+                matchExpressions:
+                  - key: preferredPet
+                    operator: In
+                    values:
+                      - cat

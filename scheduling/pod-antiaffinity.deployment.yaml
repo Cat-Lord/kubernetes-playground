@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whiskers
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: whiskers
+  template:
+    metadata:
+      labels:
+        app: whiskers
+    spec:
+      containers:
+      - name: w-cont
+        image: busybox
+        command: ['sleep']
+        args: ['infinity']
+      affinity:
+        # ANTI-affinity forces the pods to be spread out. When a node has a pod where 
+        # the condition below matches, it will try to schedule it on other node.
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - whiskers
+            topologyKey: "kubernetes.io/hostname"

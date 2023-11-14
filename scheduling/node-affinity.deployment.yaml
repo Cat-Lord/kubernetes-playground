@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paws
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: paws
+  template:
+    metadata:
+      labels:
+        app: paws
+    spec:
+      containers:
+      - name: ce-cont
+        image: busybox
+        command: ['sleep']
+        args: ['infinity']
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: preferredPet
+                  operator: In
+                  values:
+                  - cat
+                  - dog 
