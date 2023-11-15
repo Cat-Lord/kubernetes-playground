@@ -33,9 +33,10 @@ echo 'kubectl get node minikube-m02 -o jsonpath="{ .metadata.labels }" | tr -d {
 kubectl get node minikube-m02 -o jsonpath='{ .metadata.labels }' | tr -d {} | tr , \\n | awk -F: '{ printf "%-30s %-20s\n", $1, $2 }'
 echo
 print_and_wait "For the rest of this script we will create a deployment and get pods with the '-o wide' option. Make sure to check the 'Node' field."
-echo
+print_and_wait "Also the minikube defaults for node capacity is 110 pods. This is most likely impossible to change and makes the following examples a bit weird. Keep in mind in order demonstrate the scheduling behaviour some samples may seem unnecessary or overly complicated."
+print_and_wait "Let's clear the screen and start"
 
-print_and_wait "This scenario consists of a node selector deployment where we manually define a label in 'nodeSelector' which we require a node to have"
+print_and_wait -c "This scenario consists of a node selector deployment where we manually define a label in 'nodeSelector' which we require a node to have"
 execute_command cat node-selector.deployment.yaml
 execute_command kubectl create -f node-selector.deployment.yaml
 wait_and_info
@@ -53,7 +54,7 @@ execute_command kubectl delete -f node-affinity.deployment.yaml
 execute_command cat preference-affinity.deployment.yaml
 execute_command kubectl create -f preference-affinity.deployment.yaml
 wait_and_info
-print_and_wait "We should see that most of the pods are scheduled on the m02 node. There can be instances of pods being on the m04 node, since the constraints are soft."
+print_and_wait "We should see that most of the pods are scheduled on the m02 node. There can be instances of pods being on the m04 node, since the constraints are soft. K8s determined it's better to break the expectation to make scheduling happen."
 echo
 
 print_and_wait "We can match against more than just a node name. In the following example we are using a pod affinity to run pods on nodes that contain pods with a specified label."
@@ -64,13 +65,13 @@ wait_and_info
 print_and_wait "Every pod should be deployed to the same node."
 echo
 
-
 print_and_wait "If we would like to force pods to spread out through the cluster we can instead of affinity create an anti-affinity restriction. Below is a simple example that requires the pods to be placed on nodes where there are none of the pods with that label."
 execute_command kubectl delete -f pod-affinity-label.deployment.yaml
 execute_command kubectl create -f pod-antiaffinity.deployment.yaml
 wait_and_info
 
 print_and_wait "Since we've defined the anti-affinity as required, scaling the deployment above the number of nodes will start failing for more pods. Let's see that."
+print_and_wait "Some pods will be running and some will stay 'Pending'. We will inspect why right afterwards."
 execute_command kubectl scale -f pod-antiaffinity.deployment.yaml --replicas=6
 wait_and_info
 
