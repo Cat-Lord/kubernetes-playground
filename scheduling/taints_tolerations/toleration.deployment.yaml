@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orange-cat
+spec:
+  replicas: 10                # just to be sure it'll get scheduled onto each node as expected
+  selector:
+    matchLabels:
+      app: orange-cat
+  template:
+    metadata:
+      labels:
+        app: orange-cat
+    spec:
+      containers:
+        - name: orangey
+          image: busybox
+          command: ['sleep']
+          args: ['infinity']
+      tolerations:
+      - key: kei
+        operator: Equal
+        value: NotThisNode
+        effect: NoSchedule
