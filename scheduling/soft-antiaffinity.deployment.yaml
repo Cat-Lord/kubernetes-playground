@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paw-print
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: paw-print
+  template:
+    metadata:
+      labels:
+        app: paw-print
+    spec:
+      containers:
+      - name: pp-cont
+        image: busybox
+        command: ['sleep']
+        args: ['infinity']
+      # deployment spread throughout the cluster
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              topologyKey: "kubernetes.io/hostname"
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - paw-print

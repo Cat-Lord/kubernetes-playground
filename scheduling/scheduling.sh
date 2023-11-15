@@ -20,7 +20,7 @@ function wait_and_info() {
   echo
 }
 
-print_and_wait -c "Scheduling, taints, tolerations & more"
+print_and_wait -c "Scheduling with affinity"
 echo
 print_and_wait "We can assign pods directly to nodes via labels. We need to add a specific label to our node and then create a deployment that utilizes it."
 execute_command kubectl label node minikube-m02 preferredPet=cat
@@ -67,6 +67,7 @@ echo
 
 print_and_wait "If we would like to force pods to spread out through the cluster we can instead of affinity create an anti-affinity restriction. Below is a simple example that requires the pods to be placed on nodes where there are none of the pods with that label."
 execute_command kubectl delete -f pod-affinity-label.deployment.yaml
+execute_command cat pod-antiaffinity.deployment.yaml
 execute_command kubectl create -f pod-antiaffinity.deployment.yaml
 wait_and_info
 
@@ -78,7 +79,30 @@ wait_and_info
 PENDING_POD_NAME=`kubectl get pods | grep Pending | awk '{print $1}' | head -1`
 execute_command "kubectl describe pod $PENDING_POD_NAME | tail -3"
 print_and_wait "As we can see, the scaled deployment couldn't schedule two pods since we only have 4 nodes. The describe command gives the info about failed scheduling."
+print_and_wait "Let's delete it and proceed to the next example"
+execute_command kubectl delete -f pod-antiaffinity.deployment.yaml
 
-print_and_wait "Finally we'll clean up the cluster and remove the added minikube nodes."
+print_and_wait "Lastly we'll discuss node cordoning. This prevents scheduling onto a node but doesn't affect already running pods. It's useful for maintenance, rebooting etc."
+print_and_wait "We'll cordon multiple nodes and run a deployment that spreads onto all nodes as evenly as possible."
+NODE_NAMES=(`kubectl get nodes -o jsonpath='{ .items[*].metadata.name }'`)		# get all node names as array
+execute_command kubectl cordon "${NODE_NAMES[1]}"
+execute_command kubectl cordon "${NODE_NAMES[2]}"
+
+print_and_wait "The spread deployment has a soft constraint. We left one node available for deployment. Let's create it"
+execute_command cat soft-antiaffinity.deployment.yaml
+execute_command kubectl create -f soft-antiaffinity.deployment.yaml
+wait_and_info
+print_and_wait "As we can see, all the pods are scheduled on only one single node. Other nodes are non-schedulable, which we see in the output of the get command."
+print_and_wait "If we wanted to evict every running pod from a node, we would use the 'drain' command"
+execute_command kubectl drain ${NODE_NAMES[3]} --ignore-daemonsets
+
+print_and_wait "Now let's see where are the pods deployed. You can compare it with previous 'get' command above."
+sleep 3
+execute_command kubectl get pods -o wide
+
+print_and_wait "Finally we'll clean up the cluster and remove the added minikube nodes. If you plan to continue with other scheduling examples in this directory, you may keep the nodes and continue."
+execute_command kubectl uncordon "${NODE_NAMES[1]}"
+execute_command kubectl uncordon "${NODE_NAMES[2]}"
+execute_command kubectl uncordon "${NODE_NAMES[3]}" 
 execute_command kubectl delete all --all --now
 print_and_wait "Make sure to also manually delete created nodes with 'minikube node delete <node-name>'"
