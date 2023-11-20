@@ -23,6 +23,9 @@ print_and_wait "Funilly enough, this command above works with 'get deply', 'get 
 print_and_wait "We can also insepct all the created resources"
 execute_command kubectl get all
 
+print_and_wait "Pods will also have information assigned to them, such as what controllers control them:"
+execute_command "kubectl describe pods | grep -i 'controlled by'"
+
 print_and_wait "and inspect all available labels"
 execute_command kubectl get deployments --show-labels
 
@@ -41,6 +44,17 @@ execute_command kubectl scale -f basic.deployment.yaml --replicas=2
 
 print_and_wait "Let's see the event logs again"
 execute_command kubectl get event --field-selector involvedObject.name=frontend
+
+print_and_wait "Deployments automatically create replicaSets. Let's see it in action. We have our pods..."
+execute_command kubectl get pods
+print_and_wait "...and we can try deleting pods and see the replicaSet step in and initiate their recreation. (continue with CTRL+C)"
+# TODO: introduce --no-wait option for execute_command
+echo -e 'kubectl delete pods --all\n'
+kubectl delete pods --all
+echo -e 'kubectl get pods -w\n'
+kubectl get pods -w
+print_and_wait "As we can see pods got recreated with the help of replicaSet without our intervention."
+echo
 
 print_and_wait "Deletion is also the same as with pods"
 print_and_wait "Either 'kubectl delete deployment <deployment-name>' or"
