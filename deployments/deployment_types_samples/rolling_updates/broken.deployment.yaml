@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catissimo
+  labels:
+    app: catissimo
+spec:
+  replicas: 3
+  minReadySeconds: 1
+  progressDeadlineSeconds: 5    # change so we don't wait for long
+  revisionHistoryLimit: 5
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+      matchLabels:
+        app: catissimo
+  template:
+    metadata:
+      labels:
+        app: catissimo
+    spec:
+      containers:
+      - name: broken-container
+        image: dogissimo:1.0
+        resources:
+          limits:
+            cpu: "200m"
+            memory: "128Mi"

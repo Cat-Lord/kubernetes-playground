@@ -27,6 +27,7 @@ spec:
       containers:
       - name: ccont
         image: catissimo:1.0
+        imagePullPolicy: IfNotPresent
         resources:
           limits:
             cpu: "200m"
