@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: basic-ds
+spec:
+  selector:
+    matchLabels:
+      app: basic-ds-app
+  template:
+    metadata:
+      labels:
+        app: basic-ds-app
+    spec:
+      containers:
+        - name: bds-cont
+          image: busybox
+          command: ['/bin/sh', '-c']
+          args: ['sleep infinity']

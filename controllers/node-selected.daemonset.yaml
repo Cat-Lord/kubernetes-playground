@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: node-selection-ds
+spec:
+  selector:
+    matchLabels:
+      app: node-selection-ds-app
+  template:
+    metadata:
+      labels:
+        app: node-selection-ds-app
+    spec:
+      nodeSelector:
+        type: important-ds
+      containers:
+        - name: nsds-cont
+          image: busybox
+          command: ['/bin/sh', '-c']
+          args: ['sleep infinity']
+

@@ -41,7 +41,7 @@ fi
 
 echo
 echo '-----------------------------------------------------------'
-echo '| Preparation complete, you may try out the scripts now. |'
+echo '| Preparation complete, you may try out the scripts now.  |'
 echo '-----------------------------------------------------------'
 echo
 echo 'Please run the following commands in your shell to continue'

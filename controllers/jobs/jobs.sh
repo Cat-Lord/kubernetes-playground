@@ -2,7 +2,7 @@
 
 # get parent directory
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source "$DIR/../cli_utils.sh"
+source "$DIR/../../cli_utils.sh"
 
 function print_job_logs() {
   print_and_wait "Pods created:"

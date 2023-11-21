@@ -30,3 +30,21 @@ function execute_command() {
   eval $args			# keeps quotes
   echo
 }
+
+function expect_nodes() {
+  EXPECTED_NODES="$1"
+
+  if [[ -z $EXPECTED_NODES || ! $EXPECTED_NODES =~ ^[[:digit:]]{1,2}$ || $EXPECTED_NODES == "0" ]]; then
+    echo "usage: expect_nodes <number 1-99>"
+    exit 111
+  fi
+
+  ACTUAL_NODES=`minikube node list | wc -l`
+  
+  if [[ $ACTUAL_NODES -lt $EXPECTED_NODES ]]; then
+    echo "Error: Expecting $EXPECTED_NODES node(s) but cluster currently has $ACTUAL_NODES node(s). Please, add new nodes with 'minikube node add' and run this example again."
+    exit 1
+  elif [[ $ACTUAL_NODES -gt $EXPECTED_NODES ]]; then
+    echo "Warning: Expecting $EXPECTED_NODES node(s) but cluster currently has $ACTUAL_NODES node(s). This might or might not affect the outcome of this example. Proceed with care."
+  fi
+}
