@@ -30,3 +30,5 @@ Samples for deployment are forked from [Dan Wahlin's repository](https://github.
 Samples for Helm are from [Phillip Colignon's Helm Demo](https://github.com/phcollignon/helm3), simplified and adjusted.
 
 Ingress examples use adjusted hello-app from [Google samples](https://github.com/GoogleCloudPlatform/kubernetes-engine-samples).
+
+Yaml files based on the dynamic provisioning using local environment by [Rancher's Local Path Provisioner](https://github.com/rancher/local-path-provisioner).
