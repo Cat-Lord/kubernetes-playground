@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: fail-job
+spec:
+  backoffLimit: 2             # repeat at most two extra times in case we get an error (not counting the initial try)
+  template:
+    metadata:
+      name: fail-job-pod
+      labels:
+        type: fail-job
+    spec:
+      restartPolicy: Never    # this is important because we don't want the pod to restart when it fails
+                              # but rather a new pod to be created (see backoffLimit above)
+      containers:
+      - name: bjp-c
+        image: alpine
+        command:
+        - /bin/sh
+        - -c
+        - fail                # purposely fail with a random unknown command

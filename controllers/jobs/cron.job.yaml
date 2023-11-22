@@ -8,6 +8,10 @@ spec:
   jobTemplate:              # notice that this attribute is named differently compared to normal job
     spec:
       template:
+        metadata:
+          name: basic-cronjob
+          labels:
+            type: cronjob
         spec:
           restartPolicy: OnFailure
           containers:

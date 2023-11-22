@@ -1,18 +1,19 @@
 apiVersion: batch/v1      # notice the uncommon version type
 kind: Job
 metadata:
-  name: basic-job
+  name: parallel-job
 spec:
-  completions: 3          # if we run multiple pods, how many successes count as job complete?
+  parallelism: 5           # ran pods at in parallel
+  completions: 20          # specify required number of completed to succeed
   template:
     metadata:
-      name: basic-job-pod
+      name: parallel-job-pod
       labels:
-        type: basic-job
+        type: parallel-job
     spec:
       restartPolicy: Never    # or OnFailure
       containers:
-      - name: bjp-c
+      - name: pjp-c
         image: alpine
         command:
         - /bin/sh
