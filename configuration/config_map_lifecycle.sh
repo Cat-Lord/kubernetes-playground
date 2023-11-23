@@ -34,6 +34,8 @@ execute_command kubectl exec nginx-configmap -- cat /etc/user-config/editor.heig
 execute_command kubectl exec nginx-configmap -- cat /etc/user-config/editor.width
 execute_command kubectl exec nginx-configmap -- cat /etc/user-config/store-name
 
+print_and_wait "Updating config maps works only if we restart a pod after. This doesn't apply to config maps mounted as volumes."
+
 print_and_wait "Now let's see that we have env variables available in our shell"
 execute_command "kubectl exec nginx-configmap -- /bin/sh -c set | head -n 5"
 
