@@ -58,6 +58,7 @@ function run_script() {
     echo -e "\t== PERFORMING SCRIPT =="
     echo -e "\t$ $PATH_TO_SCRIPT"
     echo
+<<<<<<< HEAD
     read -n 1 -rs -p 'Press any key to continue'
     echo
     
