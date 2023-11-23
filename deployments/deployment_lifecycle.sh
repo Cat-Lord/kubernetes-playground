@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# get parent directory
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source "$DIR/../cli_utils.sh"
 
 print_and_wait -c "Deployment creation and deletion with other common basic commands."
 

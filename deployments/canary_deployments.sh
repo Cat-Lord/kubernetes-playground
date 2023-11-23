@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# get parent directory
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source "$DIR/../cli_utils.sh"
 DEPLOYMENT_SOURCES="deployment_types_samples"
 
 print_and_wait -c "Let's now see canary deployments in action"

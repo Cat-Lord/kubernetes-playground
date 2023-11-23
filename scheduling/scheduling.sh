@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# get parent directory
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source "$DIR/../cli_utils.sh"
 
 print_and_wait "For this example we will need to add a few more nodes to our minikube cluster. We will need control plane and 3 additional nodes. Run the following command manually and verfiy with 'minikube node list':"
 print_and_wait "minikube node add"

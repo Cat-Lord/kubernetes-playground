@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# get parent directory
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source "$DIR/../../../cli_utils.sh"
 LOCAL_DIR_PATH=/tmp/persistent-storage
 
 print_and_wait -c "Persistent volume created manually and claimed by a pod."

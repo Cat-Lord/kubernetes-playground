@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# get parent directory
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source "$DIR/../cli_utils.sh"
 SAMPLES_DIR="./env_variables"
 
 print_and_wait -c "Environment variables & Pods"

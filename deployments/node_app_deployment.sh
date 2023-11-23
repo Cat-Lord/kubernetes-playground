@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# get parent directory
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source "$DIR/../cli_utils.sh"
 SOURCES_DIR="zero_downtime_samples"
 
 pushd ./${SOURCES_DIR} 2>&1 1>/dev/null

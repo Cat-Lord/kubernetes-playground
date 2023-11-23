@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# get parent directory
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source "$DIR/../cli_utils.sh"
 SOURCE_DIR="./local_dynamic_provisioning"
 print_and_wait -c "Storage Class with local provisioner"
 echo

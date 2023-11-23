@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# get parent directory
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source "$DIR/../../cli_utils.sh"
 
 print_and_wait -c "Let's first deploy a sample application"
 print_and_wait "Application configuration:"
