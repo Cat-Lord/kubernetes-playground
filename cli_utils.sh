@@ -48,3 +48,8 @@ function expect_nodes() {
     echo "Warning: Expecting $EXPECTED_NODES node(s) but cluster currently has $ACTUAL_NODES node(s). This might or might not affect the outcome of this example. Proceed with care."
   fi
 }
+
+# necessary export for usage outside of this script
+export -f print_and_wait
+export -f execute_command
+export -f expect_nodes

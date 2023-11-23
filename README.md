@@ -7,9 +7,9 @@
 
 # About
 
-This is a kubernetes playground. I tested multiple things manually and documented it as shell scripts. Running the scripts
-is simple: run the script and when the exection pauses, press any key to continue (e.g. enter). This is done to make sure you
-have time to read the command output or to know what's happening and what to expect next.
+This is a kubernetes playground. Different Kubernetes topics were manually tested and later documented as shell scripts. Running the scripts
+is simple: run the start script in the project root folder. The execution will often pause and wait for your input to continue. This is done 
+to make sure you have time to read the command output and to know what's happening and what to expect next.
 
 To identify waiting state easily, every time user needs to press a key to continue, the line will start with '>' symbol:
 
@@ -19,9 +19,24 @@ List of all pods
 > $ kubectl get pods
 ```
 
+Sometimes there will be commands executed without your intervetion.
+
+## Running scripts separately
+
+You can run the scripts separately but you need to provide them with functions that are grouped in the `cli_utils.sh` script. This can be simply done by sourcing
+the script as shown below:
+
+```bash
+# from the root directory
+$ source cli_utils.sh
+$ cd some-topic/
+$ ./example.sh              # avoid doing some-topic/example.sh as described below
+``` 
+
 # Important note
 
-Make sure you always navigate to the directory of a script you would like to run. So when you want to run `jobs/jobs.sh`, make sure to `cd` into `./jobs` first. This applies to any script (yes, even in sub-directories).
+Make sure you always navigate to the directory of a script you would like to run. So when you want to run `jobs/jobs.sh`, make sure to execute `cd ./jobs` first. 
+This applies to any script (yes, even in sub-directories).
 
 # Credits
 
