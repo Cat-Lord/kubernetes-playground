@@ -19,3 +19,5 @@ tags
 # Persistent undo
 [._]*.un~
 
+# testing env for any weird scripts
+playtest/

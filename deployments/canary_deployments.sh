@@ -57,6 +57,8 @@ echo
 print_and_wait "Final cleanup"
 execute_command kubectl delete -f "${DEPLOYMENT_SOURCES}/canary_updates/v2.deployment.yaml"
 execute_command kubectl delete -f "${DEPLOYMENT_SOURCES}/canary_updates/loadbalancer.service.yaml"
+print_and_wait "Wait for the deployments to be fully removed and continue with CTRL+C."
+kubectl get pods --watch
 execute_command docker image rm catissimo:1.0
 execute_command docker image rm catissimo:2.0
 

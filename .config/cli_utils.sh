@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# put every function between the 'set -a' and this 'set +a'
+# to have them automatically exported to the outer env
+set -a
 
 function print_and_wait() {
   # clearing the console
@@ -49,7 +52,6 @@ function expect_nodes() {
   fi
 }
 
-# necessary export for usage outside of this script
-export -f print_and_wait
-export -f execute_command
-export -f expect_nodes
+# put every function between the 'set -a' and this 'set +a'
+# to have them automatically exported to the outer env
+set +a

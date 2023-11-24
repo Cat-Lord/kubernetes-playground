@@ -32,7 +32,8 @@ function wait_for_user_action() {
       ;;
       
       [eE]):
-        read -n 1 -rs -p 'Are you sure? No more scripts will be executed. Type [y|Y] for yes:' DO_EXIT
+        read -n 1 -r -p 'Are you sure? No more scripts will be executed. Type [y|Y] for yes:' DO_EXIT
+        echo  # just to make space for next terminal line (nevermin if we exited or no)
         if [[ $DO_EXIT =~ [yY] ]]; then
           exit 0
         fi
@@ -81,5 +82,7 @@ export -f wait_for_user_action
 export -f run_script
 
 print_and_wait "press any key to continue..."
-find . -mindepth 2 -regex '.*\.sh$' -exec bash -c 'run_script "$@"' bash {} \;
 
+for SCRIPT in `find . -mindepth 2 -regex '.*\.sh$'`; do
+  run_script $SCRIPT
+done

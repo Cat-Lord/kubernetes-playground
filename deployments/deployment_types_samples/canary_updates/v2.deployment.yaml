@@ -4,7 +4,7 @@ metadata:
   name: catissimo-canary
   labels:
     app: catissimo
-    track: canary
+    track: canary               # using canary to distinguish deployments
 spec:
   replicas: 1
   selector:
@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: canary-cont
-        image: catissimo:2.0
+        image: catissimo:2.0    # updated app image
         resources:
           limits:
             cpu: "200m"
