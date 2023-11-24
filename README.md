@@ -23,17 +23,18 @@ Sometimes there will be commands executed without your intervetion.
 
 ## Running scripts separately
 
-You can run the scripts separately but you need to provide them with functions that are grouped in the `cli_utils.sh` script. This can be simply done by sourcing
+You can run the scripts separately but you need to provide them with functions that are grouped in the `./config/cli_utils.sh` script. This can be simply done by sourcing
 the script as shown below:
 
 ```bash
-# from the root directory
-$ source cli_utils.sh
+$ source .config/cli_utils.sh     # from the root directory
 $ cd some-topic/
-$ ./example.sh              # avoid doing some-topic/example.sh as described below
+$ ./example.sh                    # avoid doing some-topic/example.sh as described below
 ``` 
 
-# Important note
+It's also common to alias `kubectl` command to `k`.
+
+### Never execute scripts with relative path (IMPORTANT)
 
 Make sure you always navigate to the directory of a script you would like to run. So when you want to run `jobs/jobs.sh`, make sure to execute `cd ./jobs` first. 
 This applies to any script (yes, even in sub-directories).
