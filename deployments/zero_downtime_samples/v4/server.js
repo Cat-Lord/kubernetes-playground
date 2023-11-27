@@ -6,7 +6,11 @@ var requestCount = 0;
 
 var handler = function(request, response) {
   console.log("Request received from: " + request.connection.remoteAddress);
-  response.writeHead(200);
+  if (++requestCount >= 5) {
+    response.writeHead(500);
+    response.end("Some internal error has occurred! This is pod " + os.hostname() + "\n");
+    return;
+  }
   response.end("Node v4 running in a pod: " + os.hostname() + "\n");
 };
 

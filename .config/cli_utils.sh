@@ -12,6 +12,8 @@ function print_and_wait() {
   fi
 
   # colored output
+  local NORMAL_COLOR="\e[0m"
+  local ACCENT_COLOR=$NORMAL_COLOR
   if [[ $1 == "--colored" || $1 == "-co" ]]; then
     # bold text with blue color
     ACCENT_COLOR="\e[1;36m"
@@ -22,7 +24,7 @@ function print_and_wait() {
     ACCENT_COLOR="\e[0;35m"
   fi
 
-  MESSAGE="$@"
+  local MESSAGE="$@"
   echo -e "> ${ACCENT_COLOR}${MESSAGE}${NORMAL_COLOR}"
   read -n 1 -r -s
 }
@@ -35,15 +37,14 @@ function execute_command() {
 }
 
 function expect_nodes() {
-  EXPECTED_NODES="$1"
+  local EXPECTED_NODES="$1"
 
   if [[ -z $EXPECTED_NODES || ! $EXPECTED_NODES =~ ^[[:digit:]]{1,2}$ || $EXPECTED_NODES == "0" ]]; then
     echo "usage: expect_nodes <number 1-99>"
     exit 111
   fi
 
-  ACTUAL_NODES=`minikube node list | wc -l`
-  
+  local ACTUAL_NODES=`minikube node list | wc -l`
   if [[ $ACTUAL_NODES -lt $EXPECTED_NODES ]]; then
     echo "Error: Expecting $EXPECTED_NODES node(s) but cluster currently has $ACTUAL_NODES node(s). Please, add new nodes with 'minikube node add' and run this example again."
     exit 1

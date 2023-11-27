@@ -15,7 +15,7 @@ execute_command kubectl apply -f basic.deployment.yaml
 
 print_and_wait "Now verify that the deployment was successful"
 execute_command kubectl get deployments
-print_and_wait "Funilly enough, this command above works with 'get deply', 'get deployment' and 'get deployments'. Choice is yours."
+print_and_wait "Funilly enough, this command above works with 'get deploy', 'get deployment' and 'get deployments'. Choice is yours."
 
 print_and_wait "We can also insepct all the created resources"
 execute_command kubectl get all
@@ -34,7 +34,7 @@ execute_command kubectl scale deployment frontend --replicas=5
 print_and_wait "Inpectig events we should see the scaling take place"
 execute_command kubectl get event --field-selector involvedObject.name=frontend
 print_and_wait "We can also look at all the resources (see the 'DESIRED' and 'CURRENT' replicaSets values)"
-execute_command kubectl get all
+execute_command kubectl get replicaSet
 
 print_and_wait "Also possible with the -f switch"
 execute_command kubectl scale -f basic.deployment.yaml --replicas=2
