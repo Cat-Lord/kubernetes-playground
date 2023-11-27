@@ -38,7 +38,7 @@ execute_command kubectl create -f spread.deployment.yaml
 wait_and_info
 print_and_wait "As we can see, no pods were scheduled onto the \"$TAINTED_NODE_NAME\" node because of the taint."
 
-print_and_wait "We can bypass taints with tolerations. They practically make specific taints invisible and scheduling is performed as there was no toleration at all. Let's see the following deployment:"
+print_and_wait "We can bypass taints with tolerations. They practically make specific taints invisible and scheduling is performed as if there was no toleration at all. Let's see the following deployment:"
 execute_command kubectl delete -f spread.deployment.yaml
 execute_command cat toleration.deployment.yaml
 execute_command kubectl create -f toleration.deployment.yaml

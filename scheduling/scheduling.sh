@@ -30,7 +30,7 @@ echo 'kubectl get node minikube-m02 -o jsonpath="{ .metadata.labels }" | tr -d {
 kubectl get node minikube-m02 -o jsonpath='{ .metadata.labels }' | tr -d {} | tr , \\n | awk -F: '{ printf "%-30s %-20s\n", $1, $2 }'
 echo
 print_and_wait "For the rest of this script we will create a deployment and get pods with the '-o wide' option. Make sure to check the 'Node' field."
-print_and_wait "Also the minikube defaults for node capacity is 110 pods. This is most likely impossible to change and makes the following examples a bit weird. Keep in mind in order demonstrate the scheduling behaviour some samples may seem unnecessary or overly complicated."
+print_and_wait "Also minikube node capacity defaults to 110 pods. This is most likely impossible to change and makes the following examples a bit weird. Keep in mind in order demonstrate the scheduling behaviour some samples may seem unnecessary or overly complicated."
 print_and_wait "Let's clear the screen and start"
 
 print_and_wait -c "This scenario consists of a node selector deployment where we manually define a label in 'nodeSelector' which we require a node to have"
@@ -97,9 +97,9 @@ print_and_wait "Now let's see where are the pods deployed. You can compare it wi
 sleep 3
 execute_command kubectl get pods -o wide
 
-print_and_wait "Finally we'll clean up the cluster and remove the added minikube nodes. If you plan to continue with other scheduling examples in this directory, you may keep the nodes and continue."
+print_and_wait "Finally we'll clean up the cluster. If you plan to continue with other scheduling examples in this directory, you may keep the added nodes and continue."
 execute_command kubectl uncordon "${NODE_NAMES[1]}"
 execute_command kubectl uncordon "${NODE_NAMES[2]}"
 execute_command kubectl uncordon "${NODE_NAMES[3]}" 
 execute_command kubectl delete all --all --now
-print_and_wait "Make sure to also manually delete created nodes with 'minikube node delete <node-name>'"
+print_and_wait "Manually created nodes can be deleted with 'minikube node delete <node-name>'"
