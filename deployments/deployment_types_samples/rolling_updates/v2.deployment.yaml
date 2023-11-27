@@ -6,16 +6,14 @@ metadata:
     app: catissimo
 spec:
   replicas: 3
-  minReadySeconds: 1              # number of seconds to wait after a Pod was created with containers to declare it ready
-  progressDeadlineSeconds: 60     # default 600, tries to progress through failure until reaching this timeout
-  revisionHistoryLimit: 5         # default 10, number of history versions to keep track of
+  minReadySeconds: 1
+  progressDeadlineSeconds: 60
+  revisionHistoryLimit: 5
   strategy:
-    type: RollingUpdate       # default
+    type: RollingUpdate
     rollingUpdate:
-      # default for the properties below is 25% which is 
-      # a solid choice (changed for demonstration purposes)
-      maxSurge: 1               # how many pods are allowed to be created on top of existing ones
-      maxUnavailable: 1         # how many pods are allowed to be removed from the amount of expected pods
+      maxSurge: 1
+      maxUnavailable: 1
   selector:
       matchLabels:
         app: catissimo
@@ -25,8 +23,8 @@ spec:
         app: catissimo
     spec:
       containers:
-      - name: v2-ccon
-        image: catissimo:2.0
+      - name: ccon-v2
+        image: catissimo:2.0          # Image bump for v2
         imagePullPolicy: IfNotPresent
         resources:
           limits:

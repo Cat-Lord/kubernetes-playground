@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: broken-container
-        image: dogissimo:1.0
+        image: dogissimo:1.0    # non-existent image
         resources:
           limits:
             cpu: "200m"

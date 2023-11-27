@@ -42,11 +42,9 @@ echo
 echo 'kubectl annotate deployment catissimo kubernetes.io/change-cause="upgrade to v2.0"'
 kubectl annotate deployment catissimo kubernetes.io/change-cause="upgrade to v2.0"
 echo
-echo "running curl in loop (minikube tunnel with service url: `minikube service catissimo --url`). Continue with CTRL+C."
+echo "running curl 10 times (minikube tunnel with service url: `minikube service catissimo --url`)."
 
-TEST_DEPLOYMENT=true
-trap 'TEST_DEPLOYMENT=false' SIGINT 
-while ${TEST_DEPLOYMENT}; do
+for i in {1..10}; do
   curl `minikube service catissimo --url` && echo
   sleep 0.1	# 100 millisec
 done
@@ -96,8 +94,9 @@ curl `minikube service catissimo --url` && echo; echo;
 print_and_wait "On a final note, we are also easily able to restart a deployment. This will cause a new replicaSet creation and therefore a new set of pods."
 execute_command kubectl rollout restart deployment catissimo
 
-print_and_wait "Final cleanup (wait for some to finish and continue with CTRL+C)"
+print_and_wait "Final cleanup (will take some time)."
 execute_command kubectl delete all --all
+print_and_wait "Let's check if there are pods left, if yes, wait, then continue with CTRL+C"
 execute_command kubectl get pods -w
 execute_command docker image rm catissimo:1.0
 execute_command docker image rm catissimo:2.0
