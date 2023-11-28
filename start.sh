@@ -141,6 +141,6 @@ export -f run_script
 
 print_and_wait "press any key to continue..."
 
-for SCRIPT in `find . -mindepth 2 -regex '.*\.sh$'`; do
+for SCRIPT in `find . -mindepth 2 -regex '.*\.sh$' -not -path './.config/*' -not -path './playtest/*'`; do
   run_script $SCRIPT
 done

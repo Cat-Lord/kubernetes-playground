@@ -8,3 +8,5 @@ spec:
   containers:
     - name: paw-container
       image: nginx:alpine
+      ports:
+        - containerPort: 8080

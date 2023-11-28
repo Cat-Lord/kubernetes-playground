@@ -10,6 +10,6 @@ spec:
         httpGet:
           path: /index.html
           port: 80
-        initialDelaySeconds: 2    # liveness checks start after 15s
+        initialDelaySeconds: 2    # liveness checks start after 2s
         timeoutSeconds: 2         # timeout after 2 seconds
         periodSeconds: 3          # check every 5 seconds

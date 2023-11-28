@@ -7,6 +7,6 @@ metadata:
 spec:
   containers:
     - name: meow-container
-      image: nginx:alpine
+      image: nginx:apline
       ports:
-      - containerPort: 8081
+      - containerPort: 8080

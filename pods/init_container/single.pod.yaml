@@ -15,12 +15,12 @@ spec:
       command:
         - sh
         - -c 
-        - >
+        - |
           until nslookup cat-heaven.default.svc.cluster.local 1>/dev/null; do
-            date | tr -d "\n" &&
-            echo ": Waiting for catheaven service to be accessible...";
-            sleep 1;
-          done;
+            date | tr -d "\n"
+            echo ": Waiting for catheaven service to be accessible..."
+            sleep 1
+          done
           echo "Service found and available!"
   containers:
     - name: main-app

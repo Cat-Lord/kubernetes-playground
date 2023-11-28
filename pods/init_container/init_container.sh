@@ -21,7 +21,7 @@ print_and_wait "We can access logs of the init container directly. The -c switch
 execute_command kubectl logs cat-servant -c wait-for-svc-container
 echo
 
-print_and_wait "Now let's see what happens when we deploy the service. We will deploy the service and immediatelly go into watch mode to see how the pod behaves. This may take ~10s byt you can continue with CTRL+C."
+print_and_wait "Now let's see what happens when we deploy the service. We will deploy the service and immediatelly go into watch mode to see how the pod behaves. This may take ~10s, after that you can continue with CTRL+C."
 execute_command kubectl create -f basic.service.yaml
 kubectl get pods -w
 echo
@@ -31,5 +31,5 @@ execute_command kubectl logs cat-servant -c wait-for-svc-container
 echo
 
 print_and_wait "Cleanup time:"
-execute_command kubectl delete -f single.pod.yaml
-execute_command kubectl delete -f basic.service.yaml
+print_and_wait "We can clean all resources by supplying the directory. It's surely risky, so be aware when doing that:"
+execute_command kubectl delete -f ./
