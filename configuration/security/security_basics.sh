@@ -6,7 +6,8 @@ print_and_wait -c "Inspecting security in K8s"
 print_and_wait "Basic information can be obtained like this"
 execute_command kubectl cluster-info
 
-print_and_wait "Now we'll deploy a sample pod just to see some security metadata."
+print_and_wait "Now we'll deploy a sample pod just to see some security metadata. We will also create a secret for the pod."
+execute_command kubectl create -f not_secure.secret.yaml
 execute_command kubectl create -f basic.pod.yaml
 execute_command 'kubectl get pods -o yaml | grep -P "serviceAccount(\w+)?: \w+"'
 
@@ -31,8 +32,8 @@ execute_command kubectl get sa/default --template={{.metadata.uid}}
 echo
 
 print_and_wait "We can see that the secrets are stored inside the pod as certificates here:"
-execute_command kubectl exec yaml-nginx -- ls /var/run/secrets/kubernetes.io/serviceaccount
-execute_command kubectl exec yaml-nginx -- cat /var/run/secrets/kubernetes.io/serviceaccount/token
+execute_command kubectl exec pod-with-secret -- ls /var/run/secrets/kubernetes.io/serviceaccount
+execute_command kubectl exec pod-with-secret -- cat /var/run/secrets/kubernetes.io/serviceaccount/token
 echo
 
 print_and_wait "Going back to the default service account..."
@@ -44,5 +45,6 @@ print_and_wait "The field above that, Image pull secrets, is a list of secrets t
 echo
 
 print_and_wait "Now we clean up resources"
-execute_command kubectl delete -f token.secret.yaml
 execute_command kubectl delete -f basic.pod.yaml
+execute_command kubectl delete -f token.secret.yaml
+execute_command kubectl delete -f not_secure.secret.yaml

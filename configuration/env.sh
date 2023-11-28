@@ -46,8 +46,9 @@ execute_command kubectl exec $POD_NAME -- cat /etc/appconfig/env_file_config
 
 print_and_wait "Let's update the configmap and see if anything changed for the pod. Keep in mind that the command below will replace all the variables in the configmap."
 execute_command "kubectl patch cm file-env -p '{\"data\": { \"env_file_config\": \"kitten=purrs\" } }'"
-execute_command sleep 5
+print_and_wait "The update usually takes some time (~30s to ~1min). If you don't see the updated environment in the following verification, run the commands again in another terminal window a bit later."
 execute_command kubectl get cm file-env -o yaml
+execute_command sleep 5
 execute_command kubectl exec $POD_NAME -- cat /etc/appconfig/env_file_config
 
 print_and_wait "As we can see the env file got updated without our intervention with the pods or deployment. There is a chance you're still seeing the previous values. This is caused by the API server not refreshing the volume data yes - just wait a few seconds and try again."
@@ -57,5 +58,6 @@ execute_command kubectl edit cm file-env
 print_and_wait "Cleanup"
 execute_command kubectl delete -f ${SAMPLES_DIR}/basic.deployment.yaml
 execute_command kubectl delete -f ${SAMPLES_DIR}/volumed.deployment.yaml
+execute_command kubectl delete deployment whisker
 execute_command kubectl delete cm --all --now
 

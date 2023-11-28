@@ -14,3 +14,10 @@ execute_command kubectl create serviceaccount service-reader
 
 print_and_wait "And let's also create a token. This is an additional step (TODO)"
 execute_command kubectl create -f rbac/manual.secret.yaml
+
+# TODO: this script :D
+
+print_and_wait "Cleanup"
+execute_command kubectl delete -f rbac/manual.secret.yaml
+execute_command kubectl delete serviceaccount service-reader
+execute_command kubectl delete -f rbac/basic.roles.yaml

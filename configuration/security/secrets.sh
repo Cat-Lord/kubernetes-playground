@@ -3,7 +3,7 @@
 
 print_and_wait -c "Secrets in K8s"
 
-print_and_wait "We can create secrets from the input params like with config maps (quotation is necessary in case we use some weird characters):"
+print_and_wait "We can create secrets from the input params like with config maps (quotation may be necessary in case we use some weird characters):"
 execute_command kubectl create secret generic sample-secret --from-literal=myProperty=myValue
 execute_command kubectl describe secret sample-secret
 
