@@ -2,6 +2,7 @@
 
 
 print_and_wait -c "Helm demonstration"
+echo
 
 print_and_wait "Having Helm installed we need to provide a repository to fetch charts from. The parameter after 'add' is our local name for the added repository."
 execute_command helm repo add bitnami https://charts.bitnami.com/bitnami
@@ -15,7 +16,7 @@ execute_command helm repo update
 print_and_wait "Now we can install a chart from a repository like this:"
 execute_command helm install grafana bitnami/grafana
 
-print_and_wait "Notice that we need to reference the repository and a chart in that repository like so 'repo/chart'. We also provide our local name to that resource ('grafana' in this case)."
+print_and_wait "Notice that we need to reference the repository and a chart in that repository like so: 'repo/chart'. We also provide our local name to that resource ('grafana' in this case)."
 print_and_wait "Let's see if that resource is now available in K8s..."
 execute_command kubectl get all
 

@@ -17,20 +17,16 @@ spec:
         app: {{.Values.name}}
         tier: backend 
     spec:
+      volumes:
+        - name: html
+          configMap:
+            name: be-html
       containers:
         - name: be-nginx
           image: nginx:alpine
-          command:
-          - /bin/sh
-          - -c
-          - >
-            while true; do
-              echo 'Release Name: {{.Release.Name}}' > /usr/share/nginx/html/index.html;
-              echo {{ quote .Values.greeting}} >> /usr/share/nginx/html/index.html;
-              echo '</hr >' >> /usr/share/nginx/html/index.html;
-              echo 'By {{.Values.global.owner}}' >> /usr/share/nginx/html/index.html;
-              sleep 300;
-            done
+          volumeMounts:
+          - name: html
+            mountPath: /usr/share/nginx/html
           ports:
           - containerPort: {{.Values.ports.internal}}
 

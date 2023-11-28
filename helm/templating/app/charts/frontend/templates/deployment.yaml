@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # also notice the '-' symbols which remove newline from start/end of template line
+  {{- $ChartName := .Chart.Name }}    # define a variable that is accessible in namespaces as seen below
+  {{- with .Values }}                 # start a 'namespace' so we don't need to type .Values for every property
+  name: {{ $ChartName }}
+  labels:
+    app: {{.name}}
+    tier: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: {{.name}}
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: {{.name}}
+        tier: frontend 
+  {{- end }}                        # the end of namespace scope
+    spec:
+      volumes:
+        - name: html
+          configMap:
+            name: fe-html
+      containers:
+        - name: fe-nginx
+          image: nginx:alpine
+          volumeMounts:
+            - name: html
+              mountPath: /usr/share/nginx/html
+          ports:
+            - containerPort: {{.Values.ports.internal}}   # referenced normally since our 'namespace' was already ended
+

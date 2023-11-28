@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fe-html
+  labels:
+    app: {{.name}}
+    tier: frontend
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Helm Templating</title>
+      </head>
+      <body>
+        <h1>You did it!</h1>
+        <p>Release Name: {{.Release.Name}}</p>
+        <p>{{.Values.greeting}}</p>
+        </hr>
+        <p>Random Word: {{ randAlphaNum 20 | trunc 15 | trimSuffix "-" }}</p>
+        <p>Base64 encoded password: {{.Values.password | b64enc | quote}}</p>
+        <p>Test: {{ printf "- %s" .Values.global.owner | indent 4 }}</p>
+        <p>By {{.Values.global.owner}}</p>
+      </body>
+    </html>
