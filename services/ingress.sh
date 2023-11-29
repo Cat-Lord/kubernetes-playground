@@ -23,7 +23,7 @@ print_and_wait -c "Ingress config"
 print_and_wait "Grab some snacks, this is going to be a long example"
 echo
 
-print_and_wait "There is a chance ingress is already prepared for us in our environment. If this wasn't the case, we would need to go to the official website to get the deployment file for all the relevant resources."
+print_and_wait "There is a chance ingress is already prepared for us in our environment (minikube has an ingress controller installed). If this wasn't the case, we would need to go to the official K8s website (https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/) to get the deployment file for a controller implementation of our choice."
 print_and_wait "Since we're using minikube, all we have to do is enable the ingress controller."
 execute_command minikube addons enable ingress
 
@@ -129,9 +129,9 @@ execute_command curl http://${INGRESS_IP}/sample/path/append --header '"'Host: u
 print_and_wait "Lastly, let's try out TLS. First we clear the screen"
 print_and_wait -c "The first step is to generate a certificate and create a K8s secret that uses it."
 
-execute_command openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.cert -subj '"'/C=US/ST=ILLINOIS/L=CHICAGO/O=IT/OU=IT/CN=tls.example.com'"'
+execute_command openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.cert -subj '"'/C=SK/L=BRATISLAVA/O=catissimo/CN=tls.example.com'"'
 print_and_wait "This created 2 new files for key and certificate"
-execute_command ls -l
+execute_command "ls -l | grep tls"
 execute_command kubectl create secret tls self-signed-cert-secret --cert=tls.cert --key=tls.key
 
 print_and_wait "Let's create a new docker app, deploy sample ingress TLS config and wait for an IP to be assigned. Continue with CTRL+C."
@@ -150,6 +150,7 @@ HTTPS_NODEPORT=`kubectl get svc -n ingress-nginx -o jsonpath='{ .items[0].spec.p
 print_and_wait "Now that we have this configured, we can curl the TLS-secured service. Notice that we're using HTTPS"
 execute_command curl https://tls.example.com:${HTTPS_NODEPORT}/ --resolve tls.example.com:${HTTPS_NODEPORT}:${TLS_INGRESS_IP} --insecure --verbose
 print_and_wait "We've enabled verbose output to see the TLS handshake. The --resolve option serves as a in-place DNS configuration, otherwise we would've needed to adjust our local DNS settings."
+print_and_wait "And as we see at the end of the output, we've got a response from our TLS pod. Great!"
 
 print_and_wait "Cleanup !"
 execute_command kubectl delete all --all --now
@@ -157,4 +158,5 @@ execute_command kubectl delete ingress --all --now
 execute_command kubectl delete secret self-signed-cert-secret
 execute_command rm tls.key tls.cert
 
+print_and_wait "Wait for all resources to be cleared and continue with CTRL+C"
 execute_command docker image rm hello-app:1.0 hello-app-blue:1.0 hello-app-red:1.0 error-app:1.0 tls-app:1.0

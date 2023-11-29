@@ -9,7 +9,7 @@ fi
 # start minikube only if it's not already up
 if [[ $MINIKUBE_RUNNING_SVC_COUNT -eq 0 ]]; then
   echo 'Starting minikube. This may take a moment...'
-  minikube start
+  minikube start --memory=4g --cpus=4 --driver=docker --cni=calico
 fi
 
 which docker 1>/dev/null 2>&1
