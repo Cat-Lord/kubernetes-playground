@@ -44,7 +44,7 @@ execute_command kubectl delete -f $SOURCE_DIR/local.pvc.yaml --now
 print_and_wait "And now test the node storage deletion"
 execute_command "minikube ssh -n $NODE_NAME cat /opt/local-path-provisioner/*/meow"
 execute_command "minikube ssh -n $NODE_NAME ls /opt/local-path-provisioner"
-print_and_wait "The PV got deleted and the directory still remains. Recreating the PVC and pod would create a new directory."
+print_and_wait "The PV got deleted as well as the directory."
 
 print_and_wait "Cleanup"
 execute_command kubectl delete -f $SOURCE_DIR/local.provisioner.yaml --now
