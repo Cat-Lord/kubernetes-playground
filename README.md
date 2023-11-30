@@ -28,11 +28,16 @@ the script as shown below:
 
 ```bash
 $ source .config/cli_utils.sh     # from the root directory
+$ source .config/prepare.sh
 $ cd some-topic/
 $ ./example.sh                    # avoid doing some-topic/example.sh as described below
 ``` 
 
-It's also common to alias `kubectl` command to `k`.
+It's also common to alias `kubectl` command to `k`:
+
+```bash
+$ alias k=kubectl
+```
 
 ### Never execute scripts with relative path (IMPORTANT)
 
@@ -52,10 +57,16 @@ Yaml files based on the dynamic provisioning using local environment by [Rancher
 # Improvements
 
 ## No-wait feature
-Introduce no-wait option for "execute_command" command. That way we won't have to manually echo and run the command and can still utilize syntax highlighting.
+Introduce a no-wait option for the "execute_command" command where a command is printed and the immediatelly executed. That way we won't have to manually echo 
+and run the command and can still utilize syntax highlighting.
+
+## No-execute feature
+Sometimes we want to display a command but not execute it. Introduce a no-execute option for "execute_command" command. This might be useful when we're instructing
+the user on what can be run without actually running it. The important part here is the highlighting of the printed messages so that they appear as commands but
+can be clearly identifiable as not-executable (to be determined).
 
 ## Unifying scripts
-Check if there are any manually echo-ed commands which previously had issues with 'print_and_wait' or 'execute_command'
+Check if there are any manually echo-ed commands which previously had issues with "print_and_wait" or "execute_command".
 
 ## Easy start-script navigation
 Currently we have the option to pause, stop or continue script execution with the start script. The idea is to introduce a "BACK" and "FORWARD" mechanism similar
