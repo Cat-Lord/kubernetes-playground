@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: fit-partially-pvc
+spec:
+  storageClassName: local-storage
+  accessModes:
+  - ReadOnlyMany                   # << Notice the access mode
+  resources:
+    requests:
+      storage: 90Mi
