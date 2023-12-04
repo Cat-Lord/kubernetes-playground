@@ -144,3 +144,8 @@ print_and_wait "press any key to continue..."
 for SCRIPT in `find . -mindepth 2 -regex '.*\.sh$' -not -path './.config/*' -not -path './playtest/*'`; do
   run_script $SCRIPT
 done
+
+echo
+echo '=========================='
+echo 'End of playground examples'
+echo '=========================='

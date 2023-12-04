@@ -44,6 +44,30 @@ $ alias k=kubectl
 Make sure you always navigate to the directory of a script you would like to run. So when you want to run `jobs/jobs.sh`, make sure to execute `cd ./jobs` first. 
 This applies to any script (yes, even in sub-directories).
 
+### Script naming
+
+When you are creating new scripts that should be run as K8s examples, make sure to name them as `<script-name>.sh`. If you have any scripts that you need to use 
+within any of the examples (e.g. start script copied into a custom container) ensure that the name of the script doesn't end with `.sh`, because the automated
+start script in this playground searches for such scripts and adds them to a list of executable examples.
+
+> Incorrect example:
+```
+-- HelloWorld
+ - script.sh
+ - docker
+ -- Dockerfile
+ -- start.sh      # this should be copied to a container, but the name mustn't end with '.sh'
+```
+
+> Better example:
+```
+-- HelloWorld
+ - script.sh
+ - docker
+ -- Dockerfile
+ -- start         # rename this script in the Dockerfile if needed
+```
+
 # Credits
 
 Samples for deployment are forked from [Dan Wahlin's repository](https://github.com/DanWahlin/DockerAndKubernetesCourseCode/tree/main/samples/deployments/node-app).
