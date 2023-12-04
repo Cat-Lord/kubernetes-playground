@@ -4,35 +4,91 @@
 # to have them automatically exported to the outer env
 set -a
 
+# Prints and waits for user interaction to proceed.
+# Args:
+# --clean, -c: Clears the whole screen and prints.
+# --no-wait, -n: Prints the message without waiting for user interaction.
+# --colored, -x: Prints colored and bold output.
 function print_and_wait() {
-  # clearing the console
-  if [[ $1 == "--clean" || $1 == "-c" ]]; then
-    clear;
-    shift 1
-  fi
-
-  # colored output
+  local STOP_PARSING_ARGS=""
+  local MESSAGE=""
   local NORMAL_COLOR="\e[0m"
-  local ACCENT_COLOR=$NORMAL_COLOR
-  if [[ $1 == "--colored" || $1 == "-co" ]]; then
-    # bold text with blue color
-    ACCENT_COLOR="\e[1;36m"
-    NORMAL_COLOR="\e[0m"
-    shift 1
-  else
-    # normal text with purple color
-    ACCENT_COLOR="\e[0;35m"
-  fi
+  local ACCENT_COLOR="\e[0;35m"
+  local NO_WAIT=""
+  local ACCENTED=""
+ 
+  for arg in $@; do
+    # process only if arg starts with '-' or '--'
+    if [[ -z "$arg" ]]; then
+      echo 'print_and_wait: No message to print'
+      return 1
 
-  local MESSAGE="$@"
+    elif [[ -z $STOP_PARSING_ARGS && "$arg" =~ --?.* ]]; then
+      # clearing the console
+      if [[ $arg == "--clean" || $arg == "-c" ]]; then
+        clear
+      fi
+      
+      if [[ $arg == "--no-wait" || $arg == "-n" ]]; then
+        NO_WAIT="true"
+      fi
+
+      # colored output
+      if [[ $arg == "--colored" || $arg == "-x" ]]; then
+        # bold text with blue color
+        ACCENTED="true"
+        ACCENT_COLOR="\e[1;36m"
+      fi
+    else
+      if [[ -z "$STOP_PARSING_ARGS" ]]; then
+        MESSAGE="$arg"
+        STOP_PARSING_ARGS="true"
+      else
+        MESSAGE+=" $arg"
+      fi
+    fi
+  done
+
   echo -e "> ${ACCENT_COLOR}${MESSAGE}${NORMAL_COLOR}"
-  read -n 1 -r -s
+  if [[ -z $NO_WAIT ]]; then
+    read -n 1 -r -s
+  fi
 }
 
+# Prints and executes obtained command. Before executing a 
+# command, waits for user input.
+# Args:
+# --no-wait, -n: Prints the command and immediately.
 function execute_command() {
-  args="$@"
-  print_and_wait -co "$ $args"
-  eval $args			# keeps quotes
+  local STOP_PARSING_ARGS=""
+  local MESSAGE=""
+  local NO_WAIT=""
+ 
+  for arg in $@; do
+    # process only if arg starts with '-' or '--'
+    if [[ -z "$arg" ]]; then
+      echo 'print_and_wait: No message to print'
+      return 1
+
+    elif [[ -z $STOP_PARSING_ARGS && "$arg" =~ --?.* ]]; then
+      
+      # don't wait for execution of the command, just print it
+      if [[ $arg == "--no-wait" || $arg == "-n" ]]; then
+        NO_WAIT="--no-wait"
+      fi
+
+    else
+      if [[ -z "$STOP_PARSING_ARGS" ]]; then
+        MESSAGE="$arg"
+        STOP_PARSING_ARGS="true"
+      else
+        MESSAGE+=" $arg"
+      fi
+    fi
+  done
+
+  print_and_wait --colored "$NO_WAIT" "$ $MESSAGE"
+  eval $MESSAGE     # keeps quotes
   echo
 }
 
