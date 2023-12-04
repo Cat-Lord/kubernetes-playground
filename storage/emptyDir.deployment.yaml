@@ -12,7 +12,7 @@ spec:
         app: emptydir
     spec:
       volumes: 
-        - name: html                         # has to be unique
+        - name: html                  # has to be unique for this deployment
           emptyDir: {}
       containers:
         - name: paw
@@ -29,7 +29,7 @@ spec:
             - echo 'starting...' > /html/index.html;
               while true; do 
                 date >> /html/index.html;
-                sleep 5; 
+                sleep 5;
               done
           volumeMounts:
             - name: html

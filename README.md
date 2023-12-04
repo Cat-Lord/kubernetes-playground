@@ -89,3 +89,4 @@ The option could be named `--warn` shortened to `-w` (needs verification).
 
 # Known Issues
 - Reading characters with bash read behaves strangely when pressing arrow up on the keyboard. It might be related to the colored output formatting (https://superuser.com/a/1368273). 
+- Sometimes deletion of resources can take a long time. We can interrupt this by pressing CTRL+C while keeping the termination in place.
