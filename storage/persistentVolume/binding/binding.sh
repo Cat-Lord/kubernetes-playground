@@ -3,6 +3,7 @@
 LOCAL_DIR_PATH=/tmp/persistent-storage
 
 print_and_wait -c "PV <=> PVC binding process"
+print_and_wait "- Static provisioning -"
 echo
 
 print_and_wait "We will play around with different PV and PVC properties and see how binding takes place."

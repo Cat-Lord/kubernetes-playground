@@ -5,7 +5,7 @@ metadata:
 spec:
   storageClassName: local-storage
   accessModes:
-  - ReadOnlyMany                   # << Notice the access mode
+  - ReadOnlyMany
   resources:
     requests:
       storage: 90Mi
