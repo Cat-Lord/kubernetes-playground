@@ -3,7 +3,6 @@ kind: PersistentVolumeClaim
 metadata:
   name: fit-fully-pvc
 spec:
-  storageClassName: local-storage
   accessModes:
   - ReadWriteOnce
   resources:
