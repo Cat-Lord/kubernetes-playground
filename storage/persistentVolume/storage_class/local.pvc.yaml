@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: local-sc-pvc
 spec:
-  storageClassName: local-sc
+  storageClassName: local-path
   accessModes:
   - ReadWriteOnce             # define access mode for this claim
   resources:

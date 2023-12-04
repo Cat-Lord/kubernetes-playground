@@ -6,14 +6,14 @@ spec:
   volumes:
   - name: local-storage
     persistentVolumeClaim: 
-      claimName: local-storage-pvc
+      claimName: local-sc-pvc
   containers:
     - name: thy-server
       image: nginx:alpine
       command:
         - /bin/sh
         - -c
-        - touch /tmp/data/logs && echo $(date) >> /tmp/data/logs && sleep 1000
+        - touch /tmp/data/logs && echo $(date) >> /tmp/data/logs && sleep infinity
       volumeMounts:
       - name: local-storage
         mountPath: /tmp/data

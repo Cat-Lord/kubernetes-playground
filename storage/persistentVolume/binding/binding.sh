@@ -9,6 +9,8 @@ echo
 print_and_wait "We will play around with different PV and PVC properties and see how binding takes place."
 print_and_wait "We need to make sure the minikube addon 'default-storageclass' is disabled, otherwise minikube creates the PVs automatically for us which makes this example confusing"
 minikube addons disable default-storageclass
+echo
+echo
 
 # print a file, create the resource and then
 # check the resource being created
@@ -23,8 +25,6 @@ function cat_create_check(){
   echo
 }
 
-echo
-echo
 print_and_wait "The most important part for all the following yaml files will be storage size and access mode, make sure to check them."
 print_and_wait "Let's deploy all the PVs first, since they show their stats better. After that we will deploy PVCs one by one and analyze why they are bound/not bound."
 echo
