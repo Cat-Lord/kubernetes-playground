@@ -13,7 +13,7 @@ spec:
       command:
         - /bin/sh
         - -c
-        - date >> /tmp/data/logs && sleep 1000
+        - date >> /tmp/data/logs && sleep infinity
       volumeMounts:
       - name: thy-storage-copy
         mountPath: /tmp/data

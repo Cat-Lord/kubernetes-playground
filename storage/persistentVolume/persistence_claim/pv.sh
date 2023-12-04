@@ -43,7 +43,8 @@ execute_command cat ${LOCAL_DIR_PATH}/logs
 print_and_wait "Bind information is also reflected on the PVC:"
 execute_command 'kubectl describe pvc | grep -i "used by"'
 
-print_and_wait "The PV has read/write once permissions. Let's try creating another pod that uses it to make sure it has access to the PV."
+print_and_wait "The PV has read/write once permissions. Let's try creating another pod that uses it to make sure it has access to the PV. The pod will be a copy of the existing one:"
+execute_command cat copy.pod.yaml
 execute_command kubectl create -f copy.pod.yaml
 
 print_and_wait "Wait until it's created and continue with CTRL+C"
@@ -53,11 +54,11 @@ execute_command kubectl exec singular-pod-copy -- cat /tmp/data/logs
 print_and_wait "Since the reclaim policy is set to retain in our PV, we can do this:"
 execute_command kubectl delete -f single.pod.yaml --now
 execute_command kubectl delete -f copy.pod.yaml --now
-print_and_wait "...the PV and PVC still stay and..."
+print_and_wait "The PV and PVC still stay... "
 execute_command kubectl get pvc
 execute_command 'kubectl describe pvc | grep -i "used by"'
 execute_command kubectl get pv
-print_and_wait "...so does the RETAINed storage, even though there are no pods that are using it."
+print_and_wait "...and so does the RETAINed storage, even though there are no pods that are using it."
 execute_command cat ${LOCAL_DIR_PATH}/logs
 
 print_and_wait "Deleting the PVC gets the PV into an interesting situation"
@@ -70,13 +71,14 @@ print_and_wait "If we wanted to reuse that PV, we would need to do it a little d
 execute_command kubectl create -f local.pvclaim.yaml
 execute_command kubectl create -f single.pod.yaml
 execute_command kubectl get pods
+execute_command kubectl get pv
+print_and_wait "PV still released and the pod will stay pending because the storage is not reusable after it has been 'dropped' by the PVC. We'd have to recreate all the resources to reassign it back."
+echo
 
-print_and_wait "The pod will stay pending because the storage is not reusable after it has been 'dropped' by the PVC. We'd have to recreate all the resources to reassign it back."
-
-print_and_wait "Finally we delete the PV as well. Be careful, because order matters: Pods first, then PVCs and finally PVs. Otherwise you might get stuck in a waiting state."
+print_and_wait "Finally we delete all the resources. Be careful, because order matters: Pods first, then PVCs and finally PVs. Otherwise you might get stuck in a waiting state."
 execute_command rm -r ${LOCAL_DIR_PATH}
 execute_command kubectl delete -f single.pod.yaml
 execute_command kubectl delete -f local.pvclaim.yaml
 execute_command kubectl delete pv --all
 
-echo "Don't forget to close the opened minikube mount ;)"
+echo "Don't forget to close the minikube mount ;)"
