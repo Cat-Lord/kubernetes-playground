@@ -4,6 +4,20 @@
 # to have them automatically exported to the outer env
 set -a
 
+function print_script_name() {
+  SCRIPT_NAME_LENGTH=${#CURRENT_SCRIPT}
+  if [[ $SCRIPT_NAME_LENHGT == 0 ]]; then
+    return 1
+  fi
+
+  local SEQ=$(seq $SCRIPT_NAME_LENGTH)
+  printf -- '-%.0s' $SEQ; echo   # echo '-' as many times as the script name length
+  echo "$CURRENT_SCRIPT"
+  printf -- '-%.0s' $SEQ; echo
+  echo
+  echo
+}
+
 # Prints and waits for user interaction to proceed.
 # Args:
 # --clean, -C: Clears the whole screen and prints (notice capital C).
@@ -27,6 +41,11 @@ function print_and_wait() {
       # clearing the console
       if [[ $arg == "--clean" || $arg == "-C" ]]; then
         clear
+
+        # if we know name of the current script, keep it as header after clearing the screen
+        if [[ ! -z $CURRENT_SCRIPT ]]; then
+          print_script_name
+        fi
       fi
       
       if [[ $arg == "--no-wait" || $arg == "-n" ]]; then

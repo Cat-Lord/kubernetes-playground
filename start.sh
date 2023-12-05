@@ -9,6 +9,7 @@ echo
 
 ./.config/prepare.sh
 eval $(minikube -p minikube docker-env)
+export CURRENT_SCRIPT=
 
 function exit_prompt() {
   read -n 1 -r -p 'Are you sure? No more scripts will be executed. Type [y|Y] for yes:' DO_EXIT
@@ -101,6 +102,7 @@ function run_script() {
   fi
   local SCRIPT_NAME=$(basename $PATH_TO_SCRIPT)
   local SCRIPT_PATH=${PATH_TO_SCRIPT/$SCRIPT_NAME/}
+  CURRENT_SCRIPT="$SCRIPT_NAME"
 
   pushd $SCRIPT_PATH > /dev/null
 
@@ -108,9 +110,9 @@ function run_script() {
   local IS_REPEATED="0"
   while [ $SHOULD_PERFORM_SCRIPT -eq 1 ]; do
     clear
-    echo -e "\t====================="
-    echo -e "\t= SCRIPT: $PATH_TO_SCRIPT"
-    echo -e "\t====================="
+    echo "=========="
+    echo "== SCRIPT: $PATH_TO_SCRIPT"
+    echo "=========="
     echo
 
     # don't inform about this when we repeat the script
@@ -140,7 +142,6 @@ export -f script_finished_wait
 export -f run_script
 
 print_and_wait "press any key to continue..."
-
 for SCRIPT in `find . -mindepth 2 -regex '.*\.sh$' -not -path './.config/*' -not -path './playtest/*'`; do
   run_script $SCRIPT
 done

@@ -92,11 +92,6 @@ to a common music player. User would be able to:
 - repeat the current script
 - end
 
-## Keep script name displayed at all times
-With the listing and skipping mechanism of the start script (go next, repeat script, ...) we can quickly get lost when we want to reference the current script. Proposal is
-to include the script name always on top of the screen.
-This can be achieved in a number of ways, one of which is an env variable that denotes the current script name and when a clear command is issued we will print it.
-
 ## Warning feature
 Command `print_and_wait` can clear the screen. It highlights different types of outputs (command, text, command output). Introducing a switch that will highlight a warning
 can increase the chance that users avoid accidentally missing it and wondering why do some commands fail.
