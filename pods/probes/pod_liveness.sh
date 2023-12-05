@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-print_and_wait -c "Liveness checks with HTTP and exec approach"
+print_and_wait -C "Liveness checks with HTTP and exec approach"
 
 print_and_wait "First we create a pod with HTTP liveness probe"
 execute_command kubectl apply -f http-liveness-nginx.pod.yaml

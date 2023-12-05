@@ -3,7 +3,7 @@
 
 expect_nodes 4
 
-print_and_wait -c "Controllers basics overview"
+print_and_wait -C "Controllers basics overview"
 
 print_and_wait "We can inspect all the different controllers querying the kube-system namespace"
 execute_command kubectl get --namespace kube-system all
@@ -32,10 +32,8 @@ print_and_wait "With slight changeas to the yaml, we will now deploy an updated 
 execute_command cat basic-v2.daemonset.yaml
 execute_command kubectl apply -f basic-v2.daemonset.yaml
 
-echo 'kubectl rollout status daemonsets basic-ds'
-echo '...This might take some time'
-echo
-kubectl rollout status daemonsets basic-ds
+print_and_wait --no-wait '...This might take some time'
+execute_command --no-wait kubectl rollout status daemonsets basic-ds
 print_and_wait "The describe command shows us the replacement of pods in the 'Events' section:"
 execute_command kubectl describe ds basic-ds
 echo

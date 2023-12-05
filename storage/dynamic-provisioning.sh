@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SOURCE_DIR="./local_dynamic_provisioning"
-print_and_wait -c "Storage Class with local provisioner"
+print_and_wait -C "Storage Class with local provisioner"
 echo
 
 print_and_wait "Local provisioners currently (November 2023) don't support dynamic provisioning. We will instead install a dynamic local provisioner provided by Rancher on Github."

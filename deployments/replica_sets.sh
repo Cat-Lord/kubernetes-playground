@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-print_and_wait -c "ReplicaSet bits and pieces"
+print_and_wait -C "ReplicaSet bits and pieces"
 echo
 
 print_and_wait "For this example we will need to add a few more nodes to our minikube cluster. One extra node should be enough, it won't be added if there are already 2 or more nodes available."

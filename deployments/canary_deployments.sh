@@ -2,7 +2,7 @@
 
 DEPLOYMENT_SOURCES="deployment_types_samples"
 
-print_and_wait -c "Let's now see canary deployments in action"
+print_and_wait -C "Let's now see canary deployments in action"
 echo
 
 print_and_wait "Make sure that the 'minikube tunnel' is running for this script to work correctly."
@@ -11,7 +11,7 @@ execute_command docker build -t catissimo:1.0 deployment_types_samples/code/v1
 execute_command docker build -t catissimo:2.0 deployment_types_samples/code/v2
 
 print_and_wait "Now we deploy canary updates, but first clear the screen."
-print_and_wait -c "Canary Updates"
+print_and_wait -C "Canary Updates"
 print_and_wait "We have a sample node application that prints a different message for each version of the release. Notice that we utilize a track label to distinguish between deployment types."
 execute_command cat "${DEPLOYMENT_SOURCES}/canary_updates/v1.deployment.yaml"
 execute_command cat "${DEPLOYMENT_SOURCES}/canary_updates/v2.deployment.yaml"
@@ -23,12 +23,11 @@ execute_command kubectl create -f "${DEPLOYMENT_SOURCES}/canary_updates/loadbala
 execute_command kubectl get svc
 
 print_and_wait "And let's verify it"
-echo "curl `minikube service catissimo-lb --url` && echo"
-curl `minikube service catissimo-lb --url` && echo; echo;
+execute_command "curl `minikube service catissimo-lb --url` && echo; echo"
 
 print_and_wait "Now we will deploy the canary release. We will start issuing requests to the exposed service and see if any of the requests are the new canary ones. Based on our config and the ratio of replicas, we might get only a few."
 execute_command kubectl create -f "${DEPLOYMENT_SOURCES}/canary_updates/v2.deployment.yaml" --save-config
-echo "running 10 curl (minikube tunnel with service url: `minikube service catissimo-lb --url`)."
+print_and_wait --no-wait "running 10 curl (minikube tunnel with service url: `minikube service catissimo-lb --url`)."
 
 for i in {1..10}; do
   curl `minikube service catissimo-lb --url` && echo

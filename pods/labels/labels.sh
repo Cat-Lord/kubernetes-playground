@@ -1,6 +1,6 @@
 #!/bin/bash
 
-print_and_wait -c "Labels and selectors in action"
+print_and_wait -C "Labels and selectors in action"
 execute_command kubectl apply -f paw.pod.yaml
 execute_command kubectl apply -f meow.pod.yaml
 execute_command kubectl apply -f loadbalancer.service.yaml

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-print_and_wait -c "Installing application via a custom chart."
+print_and_wait -C "Installing application via a custom chart."
 echo
 
 print_and_wait "Let's reveal the application folder structure:"
@@ -24,9 +24,7 @@ execute_command kubectl get all
 print_and_wait "And now let's upgrade to version 2 instead of an installation. We will immediately run 'kubectl get pods' to watch how they are being recreated (continue with CTRL + C)."
 execute_command cat app/chart_v2/Chart.yaml
 execute_command helm upgrade ${APP_NAME} app/chart_v2
-# TODO: introduce no-wait option for execute_command
-echo 'kubectl get pods --watch'
-kubectl get pods --watch
+execute_command --no-wait "kubectl get pods --watch"
 
 print_and_wait "Notice that the helm installation has the number of revision set to 2 this time because of the upgrade."
 execute_command helm status ${APP_NAME}
@@ -44,8 +42,6 @@ execute_command helm history ${APP_NAME}
 
 print_and_wait "The cleanup process is really simple. Let helm delete the resources, let's see it in action (quit with CTRL + C)"
 execute_command helm uninstall ${APP_NAME}
-# TODO: no-wait option
-echo 'kubectl get pods --watch'
-execute_command kubectl get pods --watch
+execute_command --no-wait kubectl get pods --watch
 execute_command docker image rm catlord/sample-app:1.0
 execute_command docker image rm catlord/sample-app:1.1

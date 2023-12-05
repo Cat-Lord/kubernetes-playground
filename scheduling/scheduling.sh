@@ -1,14 +1,7 @@
 #!/bin/bash
 
 
-print_and_wait "For this example we will need to add a few more nodes to our minikube cluster. We will need control plane and 3 additional nodes. Run the following command manually and verfiy with 'minikube node list':"
-print_and_wait "minikube node add"
-NODE_COUNT=`minikube node list | wc -l`
-
-if [[ -z "$NODE_COUNT" || "$NODE_COUNT" != 4 ]]; then
-  echo "Error: Insufficient number of cluster nodes (found $NODE_COUNT nodes). Run 'minikube node add' and make sure to create exactly 4 nodes."
-  exit 1
-fi
+expect_nodes 4
 
 function wait_and_info() {
   print_and_wait "Wait for the pods to get created and continue with CTRL+C"
@@ -17,7 +10,7 @@ function wait_and_info() {
   echo
 }
 
-print_and_wait -c "Scheduling with affinity"
+print_and_wait -C "Scheduling with affinity"
 echo
 print_and_wait "We can assign pods directly to nodes via labels. We need to add a specific label to our node and then create a deployment that utilizes it."
 execute_command kubectl label node minikube-m02 preferredPet=cat
@@ -33,7 +26,7 @@ print_and_wait "For the rest of this script we will create a deployment and get 
 print_and_wait "Also minikube node capacity defaults to 110 pods. This is most likely impossible to change and makes the following examples a bit weird. Keep in mind in order demonstrate the scheduling behaviour some samples may seem unnecessary or overly complicated."
 print_and_wait "Let's clear the screen and start"
 
-print_and_wait -c "This scenario consists of a node selector deployment where we manually define a label in 'nodeSelector' which we require a node to have"
+print_and_wait -C "This scenario consists of a node selector deployment where we manually define a label in 'nodeSelector' which we require a node to have"
 execute_command cat node-selector.deployment.yaml
 execute_command kubectl create -f node-selector.deployment.yaml
 wait_and_info

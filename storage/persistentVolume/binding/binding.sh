@@ -2,7 +2,7 @@
 
 LOCAL_DIR_PATH=/tmp/persistent-storage
 
-print_and_wait -c "PV <=> PVC binding process"
+print_and_wait -C "PV <=> PVC binding process"
 print_and_wait "- Static provisioning -"
 echo
 

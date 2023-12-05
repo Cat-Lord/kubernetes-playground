@@ -31,7 +31,7 @@ function build_and_deploy() {
 ###           ###
 ## Preparation ##
 ###           ###
-print_and_wait -c "Zero-downtime deployment with rolling updates of a node application"
+print_and_wait -C "Zero-downtime deployment with rolling updates of a node application"
 echo
 print_and_wait "Enabling minikube tunnel to redirect requests to pods from localhost..."
 print_and_wait "WARNING: Make sure to run minikube tunnel in a separate terminal session."

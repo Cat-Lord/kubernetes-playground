@@ -2,7 +2,7 @@
 
 SAMPLES_DIR="./env_variables"
 
-print_and_wait -c "Environment variables & Pods"
+print_and_wait -C "Environment variables & Pods"
 
 print_and_wait "Even though we can define variables in a Dockerfile or even application properties, it's better to abstract this information away from the source code."
 print_and_wait "The reason may be security, portability, etc."

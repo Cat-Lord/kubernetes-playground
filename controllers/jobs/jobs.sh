@@ -12,7 +12,7 @@ function print_job_logs() {
   done
 }
 
-print_and_wait -c "Jobs & Cron Jobs"
+print_and_wait -C "Jobs & Cron Jobs"
 
 print_and_wait "Let's start with a basic job"
 execute_command cat basic.job.yaml
@@ -29,14 +29,13 @@ print_and_wait "If pods fail, they will be rescheduled and ran again. With the b
 execute_command cat failed.job.yaml
 print_and_wait "After deployment we will immediatelly jump into pod watch mode. Wait for the 3 pods to be created (and fail) and continue with CTRL+C."
 execute_command kubectl create -f failed.job.yaml
-echo 'kubectl get pods -l type=fail-job -w'
-kubectl get pods -l type=fail-job -w
+execute_command --no-wait kubectl get pods -l type=fail-job -w
 print_job_logs fail-job
 echo
 print_and_wait "The job will stay in the cluster until we decide to delete it. Deleting it will also remove the pods. We'll do that at the end."
 print_and_wait "Let's clear the screen and continue"
 
-print_and_wait -c "Jobs can run in parallel for quicker execution. This depends on our use case, but it's simply achieved like this:"
+print_and_wait -C "Jobs can run in parallel for quicker execution. This depends on our use case, but it's simply achieved like this:"
 execute_command cat parallel.job.yaml
 execute_command kubectl create -f parallel.job.yaml
 execute_command kubectl get pods -l type=parallel-job -w
@@ -44,7 +43,7 @@ print_and_wait "We can see lots of pods being created and completed, which happe
 execute_command kubectl get job parallel-job
 print_and_wait "Let's clear the screen again and move to the last example."
 
-print_and_wait -c "Now we can try a cron job instead"
+print_and_wait -C "Now we can try a cron job instead"
 execute_command cat cron.job.yaml
 execute_command kubectl apply -f cron.job.yaml
 

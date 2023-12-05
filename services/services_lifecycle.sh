@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-print_and_wait -c "Let's first deploy a sample application"
+print_and_wait -C "Let's first deploy a sample application"
 print_and_wait "Application configuration:"
 execute_command cat nginx.deployment.yaml
 execute_command kubectl apply -f nginx.deployment.yaml
@@ -21,13 +21,13 @@ print_and_wait "Let's delete the service, clear the screen and continue."
 execute_command kubectl delete svc app-deployment
 print_and_wait "...press anything to continue"
 
-print_and_wait -c "Let's get information about deployed pods and see how we can use services to access them."
+print_and_wait -C "Let's get information about deployed pods and see how we can use services to access them."
 
-echo 'kubectl get pods -o name --no-headers=true | head -n 1'
+execute_command --no-exec 'kubectl get pods -o name --no-headers=true | head -n 1'
 POD_1_NAME=`kubectl get pods -o name --no-headers=true | head -n 1`	# e.g. pod/app-deployment-748f7fd48f-2sknn
 POD_1_IP=`kubectl get ${POD_1_NAME} --template '{{.status.podIP}}'`
 
-echo "Pod 1: ${POD_1_NAME} | ${POD_1_IP}"
+print_and_wait --no-wait "Pod 1: ${POD_1_NAME} | ${POD_1_IP}"
 echo
 
 print_and_wait "To access pods we can call an exposed service."

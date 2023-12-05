@@ -1,14 +1,13 @@
 #!/bin/bash
 
 
-print_and_wait -c "Deploying and using NFS server"
+print_and_wait -C "Deploying and using NFS server"
 echo
 
 print_and_wait "Unfortunately, this example requires some local work in order to get it running. The steps are:"
-# TODO: Add no-execute option for commands below
 print_and_wait "0. Install necessary NFS dependencies. Make sure to remove them if needed after the example finishes."
-execute_command sudo apt install -y nfs-common
-execute_command sudo apt install -y nfs-server
+execute_command --no-exec sudo apt install -y nfs-common
+execute_command --no-exec sudo apt install -y nfs-server
 print_and_wait "1. Building local NFS server image"
 print_and_wait docker build -t nfs-server:1.0 nfs/nfs-server
 echo
@@ -45,5 +44,4 @@ execute_command kubectl delete -f nfs/busybox.deployment.yaml
 execute_command docker stop nfs-server -s SIGKILL
 execute_command docker image rm nfs-server:1.0
 print_and_wait "You can remove the NFS binaries if necessary:"
-# TODO: no-execute command
-print_and_wait "sudo apt remove -y nfs-common && sudo apt remove -y nfs-server"
+execute_command --no-exec "sudo apt remove -y nfs-common && sudo apt remove -y nfs-server"

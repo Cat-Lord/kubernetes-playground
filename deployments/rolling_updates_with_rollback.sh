@@ -2,7 +2,7 @@
 
 DEPLOYMENT_SOURCES="deployment_types_samples"
 
-print_and_wait -c "Let's now create multiple various deployments and see how they act when we apply changes to them."
+print_and_wait -C "Let's now create multiple various deployments and see how they act when we apply changes to them."
 echo
 
 print_and_wait "Make sure that the 'minikube tunnel' is running for this script to work correctly."
@@ -11,7 +11,7 @@ execute_command docker build -t catissimo:1.0 deployment_types_samples/code/v1
 execute_command docker build -t catissimo:2.0 deployment_types_samples/code/v2
 
 print_and_wait "Let's start with rolling updates, but first clear the screen."
-print_and_wait -c "Starting with the default: Rolling Updates"
+print_and_wait -C "Starting with the default: Rolling Updates"
 print_and_wait "We have a sample node application that prints a different message for each version of the release."
 execute_command cat "${DEPLOYMENT_SOURCES}/rolling_updates/v1.deployment.yaml"
 
@@ -36,11 +36,9 @@ execute_command "curl `minikube service catissimo --url`"
 echo; echo
 
 print_and_wait "Now focus: we are going to deploy the version 2, but without waiting. We're immediately going to perform a regular curl requests to the exposed service we created above."
-echo "kubectl apply -f ${DEPLOYMENT_SOURCES}/rolling_updates/v2.deployment.yaml"
-kubectl apply -f "${DEPLOYMENT_SOURCES}/rolling_updates/v2.deployment.yaml"
+execute_command --no-wait kubectl apply -f "${DEPLOYMENT_SOURCES}/rolling_updates/v2.deployment.yaml"
 echo
-echo 'kubectl annotate deployment catissimo kubernetes.io/change-cause="upgrade to v2.0"'
-kubectl annotate deployment catissimo kubernetes.io/change-cause="upgrade to v2.0"
+execute_command --no-wait kubectl annotate deployment catissimo kubernetes.io/change-cause="upgrade to v2.0"
 echo
 echo "running curl 10 times (minikube tunnel with service url: `minikube service catissimo --url`)."
 
@@ -89,7 +87,7 @@ execute_command kubectl get pods
 execute_command kubectl rollout history deployment catissimo
 
 print_and_wait "Let's verify the app with a curl command"
-curl `minikube service catissimo --url` && echo; echo;
+execute_command --no-wait "curl `minikube service catissimo --url` && echo; echo"
 
 print_and_wait "On a final note, we are also easily able to restart a deployment. This will cause a new replicaSet creation and therefore a new set of pods."
 execute_command kubectl rollout restart deployment catissimo

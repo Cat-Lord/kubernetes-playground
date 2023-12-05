@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-print_and_wait -c "Deployment creation and deletion with other common basic commands."
+print_and_wait -C "Deployment creation and deletion with other common basic commands."
 
 print_and_wait "First of all let's create a deployment from a config file"
 print_and_wait "Let's print the config file first"
@@ -45,16 +45,12 @@ execute_command kubectl get event --field-selector involvedObject.name=frontend
 print_and_wait "Deployments automatically create replicaSets. Let's see it in action. We have our pods..."
 execute_command kubectl get pods
 print_and_wait "...and we can try deleting pods and see the replicaSet step in and initiate their recreation. (continue with CTRL+C)"
-# TODO: introduce --no-wait option for execute_command
-echo -e 'kubectl delete pods --all\n'
-kubectl delete pods --all
-echo -e 'kubectl get pods -w\n'
-kubectl get pods -w
+execute_command --no-wait kubectl delete pods --all
+execute_command --no-wait kubectl get pods -w
 print_and_wait "As we can see pods got recreated with the help of replicaSet without our intervention."
 echo
 
 print_and_wait "Deletion is also the same as with pods"
 print_and_wait "Either 'kubectl delete deployment <deployment-name>' or"
 execute_command kubectl delete -f basic.deployment.yaml
-
 

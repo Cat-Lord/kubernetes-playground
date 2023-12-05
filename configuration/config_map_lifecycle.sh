@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-print_and_wait -c "Working with ConfigMaps"
+print_and_wait -C "Working with ConfigMaps"
 
 print_and_wait "A simple config map is a normal K8s resource"
 cat simple.configmap.yaml; echo

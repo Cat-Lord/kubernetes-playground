@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-print_and_wait -c "Persistent volume through a storage class."
+print_and_wait -C "Persistent volume through a storage class."
 echo
 
 print_and_wait "Storage class doesn't support dynamic provisioning for now. We have to create an alternative deployment:"

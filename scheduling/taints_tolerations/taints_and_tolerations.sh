@@ -1,14 +1,6 @@
 #!/bin/bash
 
-
-print_and_wait "For this example we will need to add a few more nodes to our minikube cluster. We will need control plane and 3 additional nodes. Run the following command manually and verfiy with 'minikube node list':"
-print_and_wait "minikube node add"
-NODE_COUNT=`minikube node list | wc -l`
-
-if [[ -z "$NODE_COUNT" || "$NODE_COUNT" != 4 ]]; then
-  echo "Error: Insufficient number of cluster nodes (found $NODE_COUNT nodes). Run 'minikube node add' and make sure to create exactly 4 nodes."
-  exit 1
-fi
+expect_nodes 4
 
 function wait_and_info() {
   print_and_wait "Wait for the pods to get created and continue with CTRL+C"
@@ -17,7 +9,7 @@ function wait_and_info() {
   echo
 }
 
-print_and_wait -c "Scheduling with taints & tolerations"
+print_and_wait -C "Scheduling with taints & tolerations"
 echo
 print_and_wait "Taints let us control scheduling from the node's perspective. Tolerations make the taint ignored under certain conditions."
 print_and_wait "Our deployment will try to spread onto all available nodes."

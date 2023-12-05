@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-print_and_wait -c "RBAC basic configuration and playing around"
+print_and_wait -C "RBAC basic configuration and playing around"
 
 print_and_wait "First we define a role with access to services and we bind that role to a service account:"
 execute_command cat rbac/basic.roles.yaml

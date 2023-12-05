@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-print_and_wait -c "Helm demonstration"
+print_and_wait -C "Helm demonstration"
 echo
 
 print_and_wait "Having Helm installed we need to provide a repository to fetch charts from. The parameter after 'add' is our local name for the added repository."

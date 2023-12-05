@@ -6,16 +6,16 @@ set -a
 
 # Prints and waits for user interaction to proceed.
 # Args:
-# --clean, -c: Clears the whole screen and prints.
+# --clean, -C: Clears the whole screen and prints (notice capital C).
 # --no-wait, -n: Prints the message without waiting for user interaction.
-# --colored, -x: Prints colored and bold output.
+# --command, -c: Prints colored and bold output.
 function print_and_wait() {
   local STOP_PARSING_ARGS=""
   local MESSAGE=""
+  local PREFIX="> "
   local NORMAL_COLOR="\e[0m"
   local ACCENT_COLOR="\e[0;35m"
   local NO_WAIT=""
-  local ACCENTED=""
  
   for arg in $@; do
     # process only if arg starts with '-' or '--'
@@ -25,18 +25,18 @@ function print_and_wait() {
 
     elif [[ -z $STOP_PARSING_ARGS && "$arg" =~ --?.* ]]; then
       # clearing the console
-      if [[ $arg == "--clean" || $arg == "-c" ]]; then
+      if [[ $arg == "--clean" || $arg == "-C" ]]; then
         clear
       fi
       
       if [[ $arg == "--no-wait" || $arg == "-n" ]]; then
         NO_WAIT="true"
+        PREFIX=""
       fi
 
       # colored output
-      if [[ $arg == "--colored" || $arg == "-x" ]]; then
+      if [[ $arg == "--command" || $arg == "-c" ]]; then
         # bold text with blue color
-        ACCENTED="true"
         ACCENT_COLOR="\e[1;36m"
       fi
     else
@@ -49,9 +49,10 @@ function print_and_wait() {
     fi
   done
 
-  echo -e "> ${ACCENT_COLOR}${MESSAGE}${NORMAL_COLOR}"
+  echo -e "${PREFIX}${ACCENT_COLOR}${MESSAGE}${NORMAL_COLOR}"
+
   if [[ -z $NO_WAIT ]]; then
-    read -n 1 -r -s
+   read -n 1 -r -s
   fi
 }
 
@@ -59,10 +60,12 @@ function print_and_wait() {
 # command, waits for user input.
 # Args:
 # --no-wait, -n: Prints the command and immediately.
+# --no-exec, -E: Prints the command and immediately.
 function execute_command() {
   local STOP_PARSING_ARGS=""
   local MESSAGE=""
   local NO_WAIT=""
+  local NO_EXEC=""
  
   for arg in $@; do
     # process only if arg starts with '-' or '--'
@@ -77,6 +80,9 @@ function execute_command() {
         NO_WAIT="--no-wait"
       fi
 
+      if [[ $arg == "--no-exec" || $arg == "-E" ]]; then
+        NO_EXEC="--no-exec"
+      fi
     else
       if [[ -z "$STOP_PARSING_ARGS" ]]; then
         MESSAGE="$arg"
@@ -87,8 +93,11 @@ function execute_command() {
     fi
   done
 
-  print_and_wait --colored "$NO_WAIT" "$ $MESSAGE"
-  eval $MESSAGE     # keeps quotes
+  print_and_wait --command "$NO_WAIT" "$ $MESSAGE"
+  if [[ -z "$NO_EXEC" ]]; then
+    # eval keeps quoting almost perfectly as required
+    eval $MESSAGE 
+  fi
   echo
 }
 

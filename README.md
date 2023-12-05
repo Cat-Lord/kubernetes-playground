@@ -78,16 +78,7 @@ Ingress examples use adjusted hello-app from [Google samples](https://github.com
 
 Yaml files based on the dynamic provisioning using local environment by [Rancher's Local Path Provisioner](https://github.com/rancher/local-path-provisioner).
 
-# Improvements
-
-## No-wait feature
-Introduce a no-wait option for the "execute_command" command where a command is printed and the immediatelly executed. That way we won't have to manually echo 
-and run the command and can still utilize syntax highlighting.
-
-## No-execute feature
-Sometimes we want to display a command but not execute it. Introduce a no-execute option for "execute_command" command. This might be useful when we're instructing
-the user on what can be run without actually running it. The important part here is the highlighting of the printed messages so that they appear as commands but
-can be clearly identifiable as not-executable (to be determined).
+# Future Improvements
 
 ## Unifying scripts
 Check if there are any manually echo-ed commands which previously had issues with "print_and_wait" or "execute_command".

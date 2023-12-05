@@ -1,9 +1,9 @@
 #!/bin/bash
 
 
-print_and_wait -c "Pod basics using API & yaml"
+print_and_wait -C "Pod basics using API & yaml"
 
-echo "List of all pods"
+print_and_wait "List of all pods"
 execute_command kubectl get pods
 
 print_and_wait "Now let's create a sample pod"

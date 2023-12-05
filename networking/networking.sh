@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-print_and_wait -c "Internal DNS"
+print_and_wait -C "Internal DNS"
 
 print_and_wait "Warning: Make sure to run minikube tunnel before you proceed, nslookups will fail otherwise."
 print_and_wait "DNS is cluster-wide and set up in the kube-system namespace. We need to keep the namespace in mind, otherwise we won't be able to get information about the DNS."
@@ -19,8 +19,7 @@ print_and_wait "We can get the coredns ConfigMap easily:"
 execute_command kubectl describe cm coredns
 
 print_and_wait "It's possible to override the coredns service by just simply deploying a new configuration. Let's first back up the current configuration:"
-echo 'kubectl get cm coredns -o yaml > coredns-v1.configmap.yaml'
-kubectl get cm coredns -o yaml > coredns-v1.configmap.yaml
+execute_command "kubectl get cm coredns -o yaml > coredns-v1.configmap.yaml"
 
 print_and_wait "..and deploy a new one"
 execute_command cat coredns-v2.configmap.yaml
@@ -31,7 +30,7 @@ print_and_wait "We'll perform the command a few times and then continue. There i
 print_and_wait "The command: kubectl logs --selector 'k8s-app=kube-dns'"
 # we could use a --follow option but it's bugged with CTRL+C (doesn't continue this script properly)
 for i in {1..5}; do
-  kubectl logs --selector 'k8s-app=kube-dns'
+  execute_command --no-wait kubectl logs --selector 'k8s-app=kube-dns'
   sleep 2
 done
 

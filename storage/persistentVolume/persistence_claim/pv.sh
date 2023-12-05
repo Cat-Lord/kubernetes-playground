@@ -2,7 +2,7 @@
 
 LOCAL_DIR_PATH=/tmp/persistent-storage
 
-print_and_wait -c "Persistent volume created manually and claimed by a pod."
+print_and_wait -C "Persistent volume created manually and claimed by a pod."
 
 print_and_wait "Since we want to use a local directory, we need to make sure it's created."
 execute_command "rm -r ${LOCAL_DIR_PATH} 2>/dev/null; mkdir ${LOCAL_DIR_PATH} 2>/dev/null"
@@ -81,4 +81,4 @@ execute_command kubectl delete -f single.pod.yaml
 execute_command kubectl delete -f local.pvclaim.yaml
 execute_command kubectl delete pv --all
 
-echo "Don't forget to close the minikube mount ;)"
+print_and_wait --no-wait "Don't forget to close the minikube mount ;)"
