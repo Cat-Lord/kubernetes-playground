@@ -83,20 +83,6 @@ Yaml files based on the dynamic provisioning using local environment by [Rancher
 ## Unifying scripts
 Check if there are any manually echo-ed commands which previously had issues with "print_and_wait" or "execute_command".
 
-## Easy start-script navigation
-Currently we have the option to pause, stop or continue script execution with the start script. The idea is to introduce a "BACK" and "FORWARD" mechanism similar
-to a common music player. User would be able to:
-- go back to previous script
-- see list of all scripts
-- go to the next script
-- repeat the current script
-- end
-
-## Warning feature
-Command `print_and_wait` can clear the screen. It highlights different types of outputs (command, text, command output). Introducing a switch that will highlight a warning
-can increase the chance that users avoid accidentally missing it and wondering why do some commands fail.
-The option could be named `--warn` shortened to `-w` (needs verification).
-
 # Known Issues
 - Reading characters with bash read behaves strangely when pressing arrow up on the keyboard. It might be related to the colored output formatting (https://superuser.com/a/1368273). 
 - Sometimes deletion of resources can take a long time. We can interrupt this by pressing CTRL+C while keeping the termination in place.

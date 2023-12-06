@@ -20,6 +20,7 @@ function print_script_name() {
 
 # Prints and waits for user interaction to proceed.
 # Args:
+# --warn, -w: Prints the message with a warning appeal.
 # --clean, -C: Clears the whole screen and prints (notice capital C).
 # --no-wait, -n: Prints the message without waiting for user interaction.
 # --command, -c: Prints colored and bold output.
@@ -29,6 +30,7 @@ function print_and_wait() {
   local PREFIX="> "
   local NORMAL_COLOR="\e[0m"
   local ACCENT_COLOR="\e[0;35m"
+  local WARN_COLOR="\e[1;31m"
   local NO_WAIT=""
  
   for arg in $@; do
@@ -51,6 +53,11 @@ function print_and_wait() {
       if [[ $arg == "--no-wait" || $arg == "-n" ]]; then
         NO_WAIT="true"
         PREFIX=""
+      fi
+
+      if [[ $arg == "--warn" || $arg == "-w" ]]; then
+        # bold text with blue color
+        ACCENT_COLOR="$WARN_COLOR"
       fi
 
       # colored output
