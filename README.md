@@ -27,8 +27,8 @@ You can run the scripts separately but you need to provide them with functions t
 the script as shown below:
 
 ```bash
+# ./.config/prepare.sh            # run to start minikube
 $ source .config/cli_utils.sh     # from the root directory
-$ source .config/prepare.sh
 $ cd some-topic/
 $ ./example.sh                    # avoid doing some-topic/example.sh as described below
 ``` 
@@ -79,9 +79,7 @@ Ingress examples use adjusted hello-app from [Google samples](https://github.com
 Yaml files based on the dynamic provisioning using local environment by [Rancher's Local Path Provisioner](https://github.com/rancher/local-path-provisioner).
 
 # Future Improvements
-
-## Unifying scripts
-Check if there are any manually echo-ed commands which previously had issues with "print_and_wait" or "execute_command".
+- All improvements implemented so far :)
 
 # Known Issues
 - Reading characters with bash read behaves strangely when pressing arrow up on the keyboard. It might be related to the colored output formatting (https://superuser.com/a/1368273). 
