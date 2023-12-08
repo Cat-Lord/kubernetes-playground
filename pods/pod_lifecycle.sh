@@ -31,10 +31,17 @@ execute_command kubectl delete pod/my-nginx
 
 print_and_wait "Here we create a pod using a YAML definition instead of manually issuing commands."
 execute_command cat nginx.pod.yaml
-execute_command kubectl create -f nginx.pod.yaml
+execute_command kubectl create -f nginx.pod.yaml --save-config
+
+print_and_wait "The --save-config option above let's us use the 'apply' to update the pod later. Let's do that by adding a few labels:"
+execute_command cat nginx-v2.pod.yaml
+execute_command kubectl apply -f nginx-v2.pod.yaml
+
+print_and_wait "...and verify"
+execute_command kubectl get pods --show-labels
 
 print_and_wait "Now we will delete the created pod using the same approach."
-execute_command kubectl delete -f nginx.pod.yaml
+execute_command kubectl delete -f nginx-v2.pod.yaml
 
 print_and_wait "We can have multiple containers inside a single pod:"
 execute_command cat multi.pod.yaml
