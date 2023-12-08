@@ -2,6 +2,7 @@
 
 
 print_and_wait -C "Inspecting security in K8s"
+echo
 
 print_and_wait "Basic information can be obtained like this"
 execute_command kubectl cluster-info

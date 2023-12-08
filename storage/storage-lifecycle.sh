@@ -2,6 +2,7 @@
 
 
 print_and_wait -C "Now let's play with different storage types."
+echo
 
 print_and_wait "The most basic type is emptyDir located on a pod."
 print_and_wait "Let's create one:"

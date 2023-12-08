@@ -2,6 +2,7 @@
 
 
 print_and_wait -C "Let's first deploy a sample application"
+echo
 print_and_wait "Application configuration:"
 execute_command cat communication.deployment.yaml
 

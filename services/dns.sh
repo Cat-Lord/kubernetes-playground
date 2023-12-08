@@ -2,6 +2,7 @@
 
 
 print_and_wait -C "Services & the cluster DNS"
+echo
 
 execute_command kubectl create -f nginx.deployment.yaml
 

@@ -2,6 +2,7 @@
 
 
 print_and_wait -C "Playing around with some init containers"
+echo
 
 print_and_wait "Firstly, let's see the pod yaml file. Notice the initContainers: we are waiting for a service 'cat-heaven' to be available"
 execute_command cat single.pod.yaml

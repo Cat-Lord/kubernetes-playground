@@ -2,8 +2,9 @@
 
 
 print_and_wait -C "Internal DNS"
+echo
 
-print_and_wait "Warning: Make sure to run minikube tunnel before you proceed, nslookups will fail otherwise."
+print_and_wait --warn "Warning: Make sure to run minikube tunnel before you proceed, nslookups will fail otherwise."
 print_and_wait "DNS is cluster-wide and set up in the kube-system namespace. We need to keep the namespace in mind, otherwise we won't be able to get information about the DNS."
 execute_command kubectl get service --namespace kube-system
 print_and_wait "We are able to set the current context so that we don't have to type the namespace over and over again like this:"

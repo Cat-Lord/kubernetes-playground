@@ -5,10 +5,10 @@ print_and_wait -C "Deployment creation and deletion with other common basic comm
 
 print_and_wait "First of all let's create a deployment from a config file"
 print_and_wait "Let's print the config file first"
-cat basic.deployment.yaml; echo
+execute_command --no-wait "cat basic.deployment.yaml; echo"
 
 print_and_wait "Notice a little bonus at the end - specifying resources limitations"
-tail basic.deployment.yaml; echo
+execute_command --no-wait "tail basic.deployment.yaml; echo"
 
 print_and_wait "Let's run the deployment"
 execute_command kubectl apply -f basic.deployment.yaml

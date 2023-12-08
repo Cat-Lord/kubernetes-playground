@@ -9,12 +9,12 @@ function build_and_deploy() {
   VERSION=$1
   if [[ -z $1 ]]; then
     VERSION="1.0"
-    echo "Warn: build_and_deploy expects a single argument of version in the form '<version-number>.0'. Using default '1.0'"
+    print_and_wait --warn "Warn: build_and_deploy expects a single argument of version in the form '<version-number>.0'. Using default '1.0'"
   fi
 
   if [[ ! "$VERSION" =~ [1-4]\.0 ]]; then
     VERSION="1.0"
-    echo "Warn: Incorrect version $VERSION specified, using default version 1.0"
+    print_and_wait --warn  "Warn: Incorrect version $VERSION specified, using default version 1.0"
   fi
 
   PRIMARY_VERSION=${VERSION:0:1}
@@ -22,7 +22,8 @@ function build_and_deploy() {
   
   execute_command docker build -t meowness-app:${VERSION} v${PRIMARY_VERSION}
   print_and_wait "The deployment file:"
-  cat $DEPLOYMENT_FILE; echo; echo
+  execute_command --no-wait cat $DEPLOYMENT_FILE
+  echo; echo
   print_and_wait "Running the deployment"
   execute_command kubectl apply -f $DEPLOYMENT_FILE
 }

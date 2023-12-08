@@ -2,6 +2,7 @@
 
 
 print_and_wait -C "Secrets in K8s"
+echo
 
 print_and_wait "We can create secrets from the input params like with config maps (quotation may be necessary in case we use some weird characters):"
 execute_command kubectl create secret generic sample-secret --from-literal=myProperty=myValue
@@ -23,7 +24,7 @@ execute_command kubectl get secret login-secret -o yaml
 print_and_wait "Usage of secrets is similar to traditional config maps"
 execute_command cat basic.pod.yaml
 execute_command kubectl apply -f basic.pod.yaml
-sleep 2
+execute_command --no-wait sleep 2
 
 print_and_wait "Now let's query the environment variable we loaded in the config above"
 execute_command kubectl exec pod-with-secret -- /bin/sh -c  "'"'echo $LOGIN_SECRET_PASSWORD'"'"

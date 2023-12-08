@@ -5,7 +5,7 @@ DEPLOYMENT_SOURCES="deployment_types_samples"
 print_and_wait -C "Let's now create multiple various deployments and see how they act when we apply changes to them."
 echo
 
-print_and_wait "Make sure that the 'minikube tunnel' is running for this script to work correctly."
+print_and_wait --warn "Make sure that the 'minikube tunnel' is running for this script to work correctly."
 print_and_wait "We'll first create the docker containers manually, both versions 1.0 and 2.0"
 execute_command docker build -t catissimo:1.0 deployment_types_samples/code/v1
 execute_command docker build -t catissimo:2.0 deployment_types_samples/code/v2
@@ -40,7 +40,7 @@ execute_command --no-wait kubectl apply -f "${DEPLOYMENT_SOURCES}/rolling_update
 echo
 execute_command --no-wait kubectl annotate deployment catissimo kubernetes.io/change-cause="upgrade to v2.0"
 echo
-echo "running curl 10 times (minikube tunnel with service url: `minikube service catissimo --url`)."
+print_and_wait --no-wait "running curl 10 times (minikube tunnel with service url: `minikube service catissimo --url`)."
 
 for i in {1..10}; do
   curl `minikube service catissimo --url` && echo

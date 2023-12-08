@@ -13,6 +13,7 @@ function print_job_logs() {
 }
 
 print_and_wait -C "Jobs & Cron Jobs"
+echo
 
 print_and_wait "Let's start with a basic job"
 execute_command cat basic.job.yaml

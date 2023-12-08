@@ -69,6 +69,7 @@ print_and_wait "Now were going to deploy ingress with multiple services. Let's c
 
 # INGRESS-MULTIPLE
 print_and_wait -C "First let's see the ingress deployment"
+echo
 execute_command cat samples_for_ingress/multiple.ingress.yaml
 
 print_and_wait "We will first create updated versions of the containers just to have some more descriptive messages"
@@ -112,6 +113,7 @@ execute_command curl http://${INGRESS_IP}/blue/like/an/ocean --header '"'Host: p
 # NAME-BASED INGRESS
 print_and_wait "In a similar fashion we will deploy a name-based ingress."
 print_and_wait -C "Name-based Ingress"
+echo
 print_and_wait "Wait for the IP address and continue with CTRL+C as always."
 execute_command cat samples_for_ingress/name-based.ingress.yaml
 execute_command kubectl create -f samples_for_ingress/name-based.ingress.yaml
@@ -128,6 +130,7 @@ execute_command curl http://${INGRESS_IP}/sample/path/append --header '"'Host: u
 # TLS INGRESS
 print_and_wait "Lastly, let's try out TLS. First we clear the screen"
 print_and_wait -C "The first step is to generate a certificate and create a K8s secret that uses it."
+echo
 
 execute_command openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.cert -subj '"'/C=SK/L=BRATISLAVA/O=catissimo/CN=tls.example.com'"'
 print_and_wait "This created 2 new files for key and certificate"

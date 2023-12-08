@@ -2,6 +2,7 @@
 
 
 print_and_wait -C "Installing application as umbrella chart."
+echo
 
 print_and_wait "Let's see how is the structure different for umbrella charts."
 execute_command tree app_umbrella

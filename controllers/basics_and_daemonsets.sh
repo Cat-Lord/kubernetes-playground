@@ -4,6 +4,7 @@
 expect_nodes 4
 
 print_and_wait -C "Controllers basics overview"
+echo
 
 print_and_wait "We can inspect all the different controllers querying the kube-system namespace"
 execute_command kubectl get --namespace kube-system all

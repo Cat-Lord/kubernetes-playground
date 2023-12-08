@@ -96,7 +96,7 @@ function execute_command() {
   for arg in $@; do
     # process only if arg starts with '-' or '--'
     if [[ -z "$arg" ]]; then
-      echo 'print_and_wait: No message to print'
+      print_and_wait --warn 'print_and_wait: No message to print'
       return 1
 
     elif [[ -z $STOP_PARSING_ARGS && "$arg" =~ --?.* ]]; then
@@ -131,16 +131,16 @@ function expect_nodes() {
   local EXPECTED_NODES="$1"
 
   if [[ -z $EXPECTED_NODES || ! $EXPECTED_NODES =~ ^[[:digit:]]{1,2}$ || $EXPECTED_NODES == "0" ]]; then
-    echo "usage: expect_nodes <number 1-99>"
+    print_and_wait --warn "usage: expect_nodes <number 1-99>"
     exit 111
   fi
 
   local ACTUAL_NODES=`minikube node list | wc -l`
   if [[ $ACTUAL_NODES -lt $EXPECTED_NODES ]]; then
-    echo "Error: Expecting $EXPECTED_NODES node(s) but cluster currently has $ACTUAL_NODES node(s). Please, add new nodes with 'minikube node add' and run this example again."
+    print_and_wait --warn "Error: Expecting $EXPECTED_NODES node(s) but cluster currently has $ACTUAL_NODES node(s). Please, add new nodes with 'minikube node add' and run this example again."
     exit 1
   elif [[ $ACTUAL_NODES -gt $EXPECTED_NODES ]]; then
-    echo "Warning: Expecting $EXPECTED_NODES node(s) but cluster currently has $ACTUAL_NODES node(s). This might or might not affect the outcome of this example. Proceed with care."
+    print_and_wait --warn "Warning: Expecting $EXPECTED_NODES node(s) but cluster currently has $ACTUAL_NODES node(s). This might or might not affect the outcome of this example. Proceed with care."
   fi
 }
 

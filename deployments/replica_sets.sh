@@ -5,7 +5,7 @@ print_and_wait -C "ReplicaSet bits and pieces"
 echo
 
 print_and_wait "For this example we will need to add a few more nodes to our minikube cluster. One extra node should be enough, it won't be added if there are already 2 or more nodes available."
-print_and_wait "ATTENTION: YOUR WORK ON THE CLUSTER MIGHT GET LOST (draining of nodes will happen). Make sure to save any progress or create a new environment."
+print_and_wait --warn "ATTENTION: YOUR WORK ON THE CLUSTER MIGHT GET LOST (draining of nodes will happen). Make sure to save any progress or create a new environment."
 expect_nodes 2
 
 print_and_wait "Let's create a basic deployment with a few replicas"

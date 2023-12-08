@@ -2,6 +2,7 @@
 
 
 print_and_wait -C "Let's first deploy a sample application"
+echo
 print_and_wait "Application configuration:"
 execute_command cat nginx.deployment.yaml
 execute_command kubectl apply -f nginx.deployment.yaml
@@ -22,6 +23,7 @@ execute_command kubectl delete svc app-deployment
 print_and_wait "...press anything to continue"
 
 print_and_wait -C "Let's get information about deployed pods and see how we can use services to access them."
+echo
 
 execute_command --no-exec 'kubectl get pods -o name --no-headers=true | head -n 1'
 POD_1_NAME=`kubectl get pods -o name --no-headers=true | head -n 1`	# e.g. pod/app-deployment-748f7fd48f-2sknn

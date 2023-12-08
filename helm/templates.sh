@@ -3,7 +3,7 @@
 HELM_APP_SOURCE="templating/app"
 
 print_and_wait -C "Helm Templating in action"
-echo;
+echo
 
 print_and_wait "We are going to create sample application with backend and frontend both being Nginx with a custom HTML. We will expose them with port-forward and verify it."
 

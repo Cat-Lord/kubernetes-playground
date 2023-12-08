@@ -2,9 +2,10 @@
 
 
 print_and_wait -C "Working with ConfigMaps"
+echo
 
 print_and_wait "A simple config map is a normal K8s resource"
-cat simple.configmap.yaml; echo
+execute_command --no-wait "cat simple.configmap.yaml; echo"
 
 print_and_wait "Created as any resource:"
 execute_command kubectl create -f simple.configmap.yaml
