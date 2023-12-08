@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spring
+spec:
+  containers:
+    - name: spring-c
+      image: spring-liveness
+      imagePullPolicy: Never
+      ports:
+        - containerPort: 8080
+      livenessProbe:
+        httpGet:
+          path: /actuator/health
+          port: 8080
+        failureThreshold: 10        # default is 3, we expect ~5 failures in this example
+        initialDelaySeconds: 2
+        periodSeconds: 1
